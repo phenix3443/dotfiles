@@ -32,9 +32,11 @@ flowchart LR
 支持 Linux、macOS、Windows 多平台，自动检测包管理器：
 
 ```bash
-make install              # 安装 chezmoi 和 keepassxc-cli
+make install              # 安装 chezmoi、keepassxc-cli、lefthook 并配置 hooks
 make install-chezmoi      # 仅安装 chezmoi
 make install-keepassxc-cli # 仅安装 keepassxc-cli
+make install-lefthook     # 仅安装 lefthook
+make setup-hooks          # 配置 git hooks（需先安装 lefthook）
 make keepassxc-entry [cmd] # KeePassXC 条目增删改查（add|show|edit|rm|ls|search）
 make test                 # 运行测试
 make help                 # 查看所有命令
@@ -170,6 +172,31 @@ chezmoi apply ~/.claude/settings.json
 
 - **可提交到 git**：`dot_claude/settings.json.tmpl`、`dot_config/chezmoi/chezmoi.toml.tmpl`（仅模板，使用 `{{ .chezmoi.homeDir }}` 无硬编码路径）
 - **不提交**：KeePassXC 数据库文件
+
+### Git Hooks 管理
+
+仓库使用 [lefthook](https://github.com/evilmartians/lefthook) 管理 git hooks，配置文件为 `lefthook.yml`。
+
+**Pre-commit Hook**：自动检测敏感信息
+
+- 检测 API key、密码、私钥等常见敏感数据模式
+- 自动排除 `.tmpl`、`test_*.sh`、`README.md`、`lefthook.yml` 等文件
+- 提交时自动运行，发现敏感信息会阻止提交
+- 如遇误报，可使用 `git commit --no-verify` 跳过检查
+
+**安装和配置**：
+
+```bash
+make install-lefthook  # 安装 lefthook
+make setup-hooks       # 安装 git hooks
+```
+
+或手动执行：
+
+```bash
+lefthook install       # 安装 hooks 到 .git/hooks/
+lefthook run pre-commit # 手动运行 pre-commit 检查
+```
 
 ## 7. 可选：私有/忽略配置
 

@@ -1,0 +1,6 @@
+pre-commit:
+  parallel: true
+  commands:
+    check-sensitive:
+      run: sh scripts/check-sensitive.sh {staged_files}
+      stage_fixed: false
