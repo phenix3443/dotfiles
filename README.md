@@ -1,33 +1,41 @@
-# Claude Code 配置的 chezmoi + KeePassXC 管理方案
+# chezmoi + KeePassXC Dotfiles 管理方案
 
-## 架构流程
+使用 chezmoi 管理 dotfiles，通过 KeePassXC 安全存储和注入敏感信息（API keys、tokens、密码等）。
+
+## 核心特性
+
+- ✅ **安全管理敏感信息**：API keys、tokens、密码存储在 KeePassXC 中，不提交到 git
+- ✅ **跨机器同步**：dotfiles 模板可在多台机器间同步，敏感信息本地管理
+- ✅ **自动化部署**：一键安装依赖、配置 hooks、应用配置
+- ✅ **敏感信息检测**：集成 gitleaks 防止意外提交密钥
+
+## 工作流程
 
 ```mermaid
 flowchart LR
-    subgraph Source [chezmoi Source]
-        Template["dot_claude/settings.json.tmpl"]
-        Data[".chezmoidata.toml"]
+    subgraph Source [chezmoi 源文件]
+        Template["*.tmpl 模板文件"]
+        Data["chezmoi 配置"]
     end
 
-    subgraph KeePassXC [KeePassXC]
-        Entry["Claude Code 条目"]
+    subgraph KeePassXC [KeePassXC 数据库]
+        Entries["敏感信息条目<br/>(API keys, tokens, 密码)"]
     end
 
-    subgraph Output [生成结果]
-        Settings["~/.claude/settings.json"]
+    subgraph Output [生成的配置文件]
+        Config["应用配置文件<br/>(注入敏感信息)"]
     end
 
-    Template -->|keepassxc 函数读取| Entry
-    Template -->|静态配置| Data
-    Template -->|chezmoi apply| Settings
+    Template -->|keepassxc 函数读取| Entries
+    Template -->|chezmoi apply| Config
+    Data -->|配置数据库路径| Entries
 ```
 
-## 前置条件
+## 快速开始
 
-- 已安装 `chezmoi` 和 `keepassxc-cli`
-- KeePassXC 数据库文件路径已知（如 `~/.local/share/chezmoi.kdbx`）
+### 1. 安装依赖
 
-### 使用 Makefile 安装依赖
+使用 Makefile 一键安装所有依赖：
 
 支持 Linux、macOS、Windows 多平台，自动检测包管理器：
 
@@ -49,24 +57,17 @@ make help                 # 查看所有命令
 - **macOS**：Homebrew、MacPorts、Nix
 - **Windows**（MSYS2/Git Bash）：winget、Scoop、Chocolatey
 
-可通过 `INSTALL_BIN` 指定 chezmoi 二进制安装目录，默认 `~/.local/bin`：
+可通过 `INSTALL_BIN` 指定二进制安装目录，默认 `~/.local/bin`：
 
 ```bash
 make install-chezmoi INSTALL_BIN=~/bin
 ```
 
-- 在 KeePassXC 中预先创建好用于 Claude Code 的条目（见下文）
+### 2. 创建 KeePassXC 数据库和条目
 
-## 1. KeePassXC 条目结构
+在 KeePassXC 中创建条目存储敏感信息（API keys、tokens、密码等）。
 
-在 KeePassXC 中创建一个条目（建议命名为 `Claude Code` 或 `Anthropic API`），字段建议如下：
-
-| 字段           | 对应环境变量          | 示例值                      |
-| ------------ | ------------------- | ------------------------ |
-| **Password** | `ANTHROPIC_AUTH_TOKEN` | 您的真实 API Key             |
-| **URL**      | `ANTHROPIC_BASE_URL`   | `https://api.skyapi.org` |
-
-**方式一：交互式脚本（推荐）**
+#### 方式一：交互式脚本（推荐）
 
 ```bash
 make keepassxc-entry add         # 添加条目
@@ -79,35 +80,44 @@ make keepassxc-entry add         # 添加条目
 ./scripts/keepassxc-entry.sh --help  # 帮助
 ```
 
-支持 add/show/edit/rm/ls/search。添加条目时：数据库路径（默认 `~/.local/share/chezmoi.kdbx`）、条目路径（必填，支持 `Group/Entry`）、Username/URL/Notes（可留空）。密码由 keepassxc-cli 原生提示。
+脚本支持完整的 CRUD 操作。添加条目时：
+- 数据库路径（默认 `~/.local/share/chezmoi.kdbx`）
+- 条目路径（必填，支持 `Group/Entry` 层级）
+- Username/URL/Notes（可选）
+- 密码由 keepassxc-cli 原生提示
 
-**方式二：KeePassXC 图形界面**
+#### 方式二：KeePassXC 图形界面
 
 1. 打开 KeePassXC，打开或新建数据库（如 `~/.local/share/chezmoi.kdbx`）
 2. 在左侧分组中右键 → **添加新条目**（或 Ctrl+N）
-3. 填写 **标题**：`Claude Code`（须与模板中的条目标题一致）
-4. 在 **密码** 栏填入你的 API Key
-5. 在 **URL** 栏填入 base URL（如 `https://api.skyapi.org`）
-6. 保存（Ctrl+S）
+3. 填写 **标题**、**用户名**、**密码**、**URL** 等字段
+4. 保存（Ctrl+S）
 
-若 base URL 需单独管理，可添加自定义属性 `base_url`：在条目编辑界面点击 **属性** → **添加**，名称填 `base_url`，值填 URL；模板中用 `keepassxcAttribute "Claude Code" "base_url"` 读取，此时可置空 URL 字段。**注意**：自定义属性仅支持通过图形界面添加，keepassxc-cli 暂不支持。
+**自定义属性**：若需存储额外字段（如 `base_url`），在条目编辑界面点击 **属性** → **添加**。模板中用 `keepassxcAttribute "条目名" "属性名"` 读取。**注意**：自定义属性仅支持通过图形界面添加，keepassxc-cli 暂不支持。
 
-## 2. 文件结构
+### 3. 配置 chezmoi 使用 KeePassXC
 
-在 chezmoi 源目录 `~/.local/share/chezmoi/` 下创建：
+创建 `dot_config/chezmoi/chezmoi.toml.tmpl` 配置 KeePassXC 数据库路径：
 
-```
-~/.local/share/chezmoi/
-├── dot_claude/
-│   └── settings.json.tmpl    # Claude Code 配置模板
-└── dot_config/
-    └── chezmoi/
-        └── chezmoi.toml.tmpl # chezmoi 自身配置（KeePassXC）
+```toml
+[keepassxc]
+database = "{{ .chezmoi.homeDir }}/.local/share/chezmoi.kdbx"
 ```
 
-## 3. 模板内容
+使用 `{{ .chezmoi.homeDir }}` 实现跨机器可移植。若数据库无密码，可添加：
 
-**dot_claude/settings.json.tmpl**：
+```toml
+args = ["--no-password"]
+prompt = false
+```
+
+### 4. 创建配置模板
+
+在 chezmoi 源目录创建模板文件，使用 `keepassxc` 函数读取敏感信息。
+
+#### 示例：Claude Code 配置
+
+创建 `dot_claude/settings.json.tmpl`：
 
 ```json
 {
@@ -123,56 +133,42 @@ make keepassxc-entry add         # 添加条目
 }
 ```
 
-若 base URL 使用自定义属性 `base_url`，则改为：
+**模板语法说明**：
+- `keepassxc "条目名"`：读取 KeePassXC 条目
+- `.Password`、`.Username`、`.URL`：访问条目字段
+- `keepassxcAttribute "条目名" "属性名"`：读取自定义属性
 
-```
-"ANTHROPIC_BASE_URL": "{{ keepassxcAttribute "Claude Code" "base_url" }}"
-```
+条目名需与 KeePassXC 中完全一致（区分大小写）。如使用层级（如 `Internet/MyApp`），按 KeePassXC 路径格式填写。
 
-模板中的 `"Claude Code"` 需与 KeePassXC 中条目标题完全一致。如使用层级（如 `Internet/Claude Code`），按 KeePassXC 的路径格式填写。
+### 5. 应用配置
 
-## 4. KeePassXC 配置
-
-`~/.config/chezmoi/chezmoi.toml` 由 `dot_config/chezmoi/chezmoi.toml.tmpl` 管理，使用 `{{ .chezmoi.homeDir }}` 实现跨机器可移植：
-
-```toml
-[keepassxc]
-database = "{{ .chezmoi.homeDir }}/.local/share/chezmoi.kdbx"
-```
-
-若数据库无密码，可添加：
-
-```toml
-args = ["--no-password"]
-prompt = false
-```
-
-## 5. 应用流程
-
-**首次使用前，检查 KeePassXC 配置：**
+**首次使用前检查配置**：
 
 ```bash
-make check-keepassxc
+make check-keepassxc  # 检查数据库和条目
 ```
 
-此命令会检查数据库和 `Claude Code` 条目是否存在。如果不存在，按提示使用 `make keepassxc-entry add` 创建。
-
-**应用配置：**
+**应用配置**：
 
 ```bash
-# 首次或更新后应用配置
-chezmoi apply
-
-# 或只应用 .claude 相关
-chezmoi apply ~/.claude/settings.json
+chezmoi apply         # 应用所有配置
+chezmoi apply ~/.config/app/config.json  # 应用特定文件
 ```
 
-应用时会提示输入 KeePassXC 数据库密码。应用后，`~/.claude/settings.json` 会包含从 KeePassXC 读取的真实 token 和 base URL，且该文件由 chezmoi 管理，不应手动长期修改。
+应用时会提示输入 KeePassXC 数据库密码。生成的配置文件包含从 KeePassXC 读取的真实敏感信息，由 chezmoi 管理，不应手动长期修改。
 
-## 6. 敏感信息与版本控制
+## 版本控制与安全
 
-- **可提交到 git**：`dot_claude/settings.json.tmpl`、`dot_config/chezmoi/chezmoi.toml.tmpl`（仅模板，使用 `{{ .chezmoi.homeDir }}` 无硬编码路径）
-- **不提交**：KeePassXC 数据库文件
+### 可提交到 git
+
+- ✅ 模板文件（`*.tmpl`）：不包含实际敏感信息
+- ✅ chezmoi 配置（`dot_config/chezmoi/chezmoi.toml.tmpl`）：使用 `{{ .chezmoi.homeDir }}` 无硬编码路径
+- ✅ 脚本和工具配置
+
+### 不提交到 git
+
+- ❌ KeePassXC 数据库文件（`*.kdbx`）
+- ❌ 生成的配置文件（由 chezmoi apply 生成）
 
 ### Git Hooks 管理
 
@@ -207,13 +203,40 @@ gitleaks git --pre-commit # 单独运行 gitleaks
 - `lefthook.yml`：hook 管理配置
 - `.gitleaks.toml`：gitleaks 自定义规则和白名单
 
-## 7. 可选：私有/忽略配置
+## 高级用法
 
-若需覆盖 KeePassXC 数据库路径，可在 `~/.config/chezmoi/chezmoi.toml` 中设置，或使用 `.chezmoidata.toml` 提供机器特定变量。
+### 机器特定配置
+
+使用 `.chezmoidata.toml` 提供机器特定变量：
+
+```toml
+[data]
+email = "user@example.com"
+hostname = "workstation"
+```
+
+在模板中使用：`{{ .email }}`
+
+### 覆盖 KeePassXC 数据库路径
+
+在 `~/.config/chezmoi/chezmoi.toml` 中覆盖：
+
+```toml
+[keepassxc]
+database = "/custom/path/to/database.kdbx"
+```
+
+### 预览模板生成结果
+
+```bash
+chezmoi execute-template < dot_config/app/config.tmpl
+```
+
+会提示输入 KeePassXC 密码并显示生成内容，但不写入文件。
 
 ## 注意事项
 
-1. **keepassxc-cli**：需已安装 `keepassxc-cli`，chezmoi 依赖其读取数据库
-2. **条目标题**：模板中的 `"Claude Code"` 必须与 KeePassXC 中条目标题一致（区分大小写）
-3. **层级路径**：若条目在子组中，可能需要使用完整路径，如 `Internet/Claude Code`（取决于 keepassxc-cli 的解析方式）
-4. **验证**：应用前可用 `chezmoi execute-template < dot_claude/settings.json.tmpl` 预览生成内容（会提示输入 KeePassXC 密码）
+1. **keepassxc-cli 依赖**：chezmoi 依赖 `keepassxc-cli` 读取数据库，确保已安装
+2. **条目名称匹配**：模板中的条目名必须与 KeePassXC 中完全一致（区分大小写）
+3. **层级路径**：若条目在子组中，使用完整路径，如 `Internet/MyApp`
+4. **密码提示**：每次 `chezmoi apply` 会提示输入数据库密码，可配置 KeePassXC 浏览器集成避免重复输入
