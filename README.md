@@ -170,17 +170,19 @@ chezmoi apply ~/.config/app/config.json  # 应用特定文件
 - ❌ KeePassXC 数据库文件（`*.kdbx`）
 - ❌ 生成的配置文件（由 chezmoi apply 生成）
 
-### Git Hooks 管理
+### 敏感信息检测（多层防护）
 
-仓库使用 [lefthook](https://github.com/evilmartians/lefthook) 管理 git hooks，并集成 [gitleaks](https://github.com/gitleaks/gitleaks) 检测敏感信息。
+采用**分层扫描策略**，在不同阶段检测敏感信息泄露：
 
-**Pre-commit Hook**：使用 gitleaks 自动检测敏感信息
+#### 1. Pre-commit Hook（本地防护）
 
-- **gitleaks**：业界标准的密钥扫描工具（24,400+ stars）
-- 内置 150+ 检测规则：API key、密码、私钥、token 等
-- 支持自定义规则（`.gitleaks.toml`）和白名单（`.gitleaksignore`）
+使用 [gitleaks](https://github.com/gitleaks/gitleaks) 在提交前检测：
+
+- **速度快**：毫秒级扫描，不影响开发体验
+- **150+ 检测规则**：API key、密码、私钥、token 等
+- **自定义配置**：`.gitleaks.toml` 配置规则和白名单
 - 提交时自动运行，发现敏感信息会阻止提交
-- 如遇误报，可使用 `git commit --no-verify` 跳过检查
+- 如遇误报，可使用 `git commit --no-verify` 跳过
 
 **安装和配置**：
 
@@ -198,10 +200,29 @@ lefthook run pre-commit  # 手动运行 pre-commit 检查
 gitleaks git --pre-commit # 单独运行 gitleaks
 ```
 
+#### 2. GitHub Actions（CI/CD 防护）
+
+使用 [TruffleHog](https://github.com/trufflesecurity/trufflehog) 在 CI/CD 中深度扫描：
+
+- **更全面**：800+ 检测器，覆盖更多密钥类型
+- **凭证验证**：测试检测到的密钥是否仍然有效（减少误报）
+- **全历史扫描**：扫描整个 git 历史，防止遗漏
+- 自动在 PR 和 push 时运行
+
+工作流配置见 `.github/workflows/secret-scanning.yml`。
+
+**为什么使用两个工具？**
+
+- **Gitleaks**：本地快速检查，开发时即时反馈
+- **TruffleHog**：CI/CD 深度扫描，双重保险
+
+根据行业最佳实践，这种分层策略可将密钥泄露风险降低 13 倍。[参考](https://appsecsanta.com/gitleaks-vs-trufflehog)
+
 **配置文件**：
 
 - `lefthook.yml`：hook 管理配置
 - `.gitleaks.toml`：gitleaks 自定义规则和白名单
+- `.github/workflows/secret-scanning.yml`：GitHub Actions 工作流
 
 ## 高级用法
 
