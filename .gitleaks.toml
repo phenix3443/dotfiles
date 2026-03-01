@@ -1,0 +1,13 @@
+# Gitleaks configuration
+# https://github.com/gitleaks/gitleaks#configuration
+
+title = "Gitleaks config for chezmoi dotfiles"
+
+[allowlist]
+description = "Allowlist for template files and tests"
+paths = [
+  '''.*\.tmpl$''',
+  '''test_.*\.sh$''',
+  '''tests/.*''',
+  '''README\.md$''',
+]

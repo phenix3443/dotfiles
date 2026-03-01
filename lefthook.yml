@@ -1,6 +1,9 @@
 pre-commit:
   parallel: true
   commands:
-    check-sensitive:
-      run: sh scripts/check-sensitive.sh {staged_files}
+    gitleaks:
+      run: gitleaks git --pre-commit --verbose
       stage_fixed: false
+      skip:
+        - merge
+        - rebase

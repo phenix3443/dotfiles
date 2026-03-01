@@ -32,10 +32,11 @@ flowchart LR
 支持 Linux、macOS、Windows 多平台，自动检测包管理器：
 
 ```bash
-make install              # 安装 chezmoi、keepassxc-cli、lefthook 并配置 hooks
+make install              # 安装所有依赖并配置 hooks
 make install-chezmoi      # 仅安装 chezmoi
 make install-keepassxc-cli # 仅安装 keepassxc-cli
 make install-lefthook     # 仅安装 lefthook
+make install-gitleaks     # 仅安装 gitleaks
 make setup-hooks          # 配置 git hooks（需先安装 lefthook）
 make keepassxc-entry [cmd] # KeePassXC 条目增删改查（add|show|edit|rm|ls|search）
 make test                 # 运行测试
@@ -175,28 +176,36 @@ chezmoi apply ~/.claude/settings.json
 
 ### Git Hooks 管理
 
-仓库使用 [lefthook](https://github.com/evilmartians/lefthook) 管理 git hooks，配置文件为 `lefthook.yml`。
+仓库使用 [lefthook](https://github.com/evilmartians/lefthook) 管理 git hooks，并集成 [gitleaks](https://github.com/gitleaks/gitleaks) 检测敏感信息。
 
-**Pre-commit Hook**：自动检测敏感信息
+**Pre-commit Hook**：使用 gitleaks 自动检测敏感信息
 
-- 检测 API key、密码、私钥等常见敏感数据模式
-- 自动排除 `.tmpl`、`test_*.sh`、`README.md`、`lefthook.yml` 等文件
+- **gitleaks**：业界标准的密钥扫描工具（24,400+ stars）
+- 内置 150+ 检测规则：API key、密码、私钥、token 等
+- 支持自定义规则（`.gitleaks.toml`）和白名单（`.gitleaksignore`）
 - 提交时自动运行，发现敏感信息会阻止提交
 - 如遇误报，可使用 `git commit --no-verify` 跳过检查
 
 **安装和配置**：
 
 ```bash
-make install-lefthook  # 安装 lefthook
-make setup-hooks       # 安装 git hooks
+make install           # 安装所有依赖（包含 gitleaks）
+make install-gitleaks  # 仅安装 gitleaks
+make setup-hooks       # 配置 git hooks
 ```
 
 或手动执行：
 
 ```bash
-lefthook install       # 安装 hooks 到 .git/hooks/
-lefthook run pre-commit # 手动运行 pre-commit 检查
+lefthook install         # 安装 hooks 到 .git/hooks/
+lefthook run pre-commit  # 手动运行 pre-commit 检查
+gitleaks git --pre-commit # 单独运行 gitleaks
 ```
+
+**配置文件**：
+
+- `lefthook.yml`：hook 管理配置
+- `.gitleaks.toml`：gitleaks 自定义规则和白名单
 
 ## 7. 可选：私有/忽略配置
 
