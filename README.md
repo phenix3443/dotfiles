@@ -122,8 +122,8 @@ prompt = false
 ```json
 {
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "{{ (keepassxc "Claude Code").Password }}",
-    "ANTHROPIC_BASE_URL": "{{ (keepassxc "Claude Code").URL }}",
+    "ANTHROPIC_AUTH_TOKEN": "{{ (keepassxc \"Claude Code\").Password }}",
+    "ANTHROPIC_BASE_URL": "{{ (keepassxc \"Claude Code\").URL }}",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
   },
   "permissions": {
