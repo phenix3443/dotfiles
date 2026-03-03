@@ -3,7 +3,7 @@
 # Runs before other targets (ASCII order: .claude < .config), so the DB exists when templates run.
 set -e
 
-SOURCE_DIR="${CHEZMOI_SOURCE_DIR:-.}"
+SOURCE_DIR="${CHEZMOI_SOURCE_DIR:-${HOME}/.local/share/chezmoi}"
 KEY="${HOME}/.config/chezmoi/age.txt"
 SRC="${SOURCE_DIR}/dot_config/keepassxc/encrypted_private_chezmoi.kdbx.age"
 OUT="${HOME}/.config/keepassxc/chezmoi.kdbx"

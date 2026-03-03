@@ -7,17 +7,21 @@ INSTALL_BIN ?= $(HOME)/.local/bin
 PATH := $(INSTALL_BIN):$(PATH)
 export PATH
 
-.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry add show edit rm ls search setup-hooks setup-age-keys ensure-path help test
+.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry bootstrap-chezmoi-config add show edit rm ls search setup-hooks setup-age-keys ensure-path help test
 
 help:
 	@echo "Targets:"
 	@echo "  install             - 安装使用 chezmoi 与在 dotfiles 仓库编辑所需的全部依赖并配置 git hooks（一键准备就绪）"
+	@echo "  bootstrap-chezmoi-config - 首次 apply 前：引导 config（encryption、age、keepassxc）"
 	@echo "  setup-age-keys      - 生成 age 密钥并写入 chezmoi.toml.tmpl 的 recipient（首次使用 age 加密前执行）"
 	@echo "  keepassxc-entry [cmd] - KeePassXC 条目管理（add|show|edit|rm|ls|search）"
 	@echo "  test                - 运行 keepassxc-entry 测试"
 	@echo "  help                - 显示本帮助"
 
-install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks setup-hooks ensure-path
+install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks setup-hooks ensure-path bootstrap-chezmoi-config
+
+bootstrap-chezmoi-config:
+	@sh "$(ROOT)scripts/bootstrap-chezmoi-config.sh"
 
 install-chezmoi:
 	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/install-chezmoi.sh"

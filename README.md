@@ -109,6 +109,16 @@ prompt = false
 
 KeePassXC 数据库文件（`chezmoi.kdbx`）以 age 加密形式存放在仓库中（`dot_config/keepassxc/chezmoi.kdbx.age`），`chezmoi apply` 时会自动解密到 `~/.config/keepassxc/chezmoi.kdbx`。
 
+**首次执行 `chezmoi apply`（新机器或 init 后）：**
+
+1. 将 age 私钥放到 `~/.config/chezmoi/age.txt`（若尚未放置）。
+2. 在仓库根目录执行一次引导脚本，写入完整 config（encryption + age + keepassxc）：
+   ```bash
+   make bootstrap-chezmoi-config
+   ```
+   或直接运行 `./scripts/bootstrap-chezmoi-config.sh`。
+3. 执行 `chezmoi apply`。run_before 会先解密 kdbx，再应用所有 target。
+
 **首次或本机准备：**
 
 1. **生成 age 密钥并写入 recipient**（私钥仅保存在本机，不要提交到 git）：
@@ -128,7 +138,7 @@ KeePassXC 数据库文件（`chezmoi.kdbx`）以 age 加密形式存放在仓库
    源目录会生成 `dot_config/keepassxc/chezmoi.kdbx.age`，提交到 git 即可。
 
 **新机器：**  
-将私钥文件放到 `~/.config/chezmoi/age.txt`，拉取仓库后执行 `chezmoi apply`，即可自动解密得到 `~/.config/keepassxc/chezmoi.kdbx` 及正确配置。
+将私钥文件放到 `~/.config/chezmoi/age.txt`，在仓库根目录执行 `make bootstrap-chezmoi-config` 后再执行 `chezmoi apply`，即可自动解密得到 `~/.config/keepassxc/chezmoi.kdbx` 及正确配置。
 
 #### 用 chezmoi 管理 KeePassXC 应用配置
 
