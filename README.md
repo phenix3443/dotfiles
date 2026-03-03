@@ -1,6 +1,6 @@
 # chezmoi + KeePassXC Dotfiles 管理方案
 
-使用 chezmoi 管理 dotfiles，通过 KeePassXC 安全存储和注入敏感信息（API keys、tokens、密码等），敏感文件用 age 加密后提交到仓库。
+使用 chezmoi 管理 dotfiles，通过 KeePassXC 安全存储和注入敏感信息（API keys、tokens、密码等），敏感文件用 age 加密后提交到仓库。本仓库使用 `.chezmoiroot`，源状态位于 `dotfiles/` 子目录。
 
 ## 核心特性
 
@@ -67,9 +67,9 @@ make keepassxc-entry search  # 搜索
 ### 3. 配置 chezmoi（KeePassXC + age）
 
 - **本机首次**：
-  1. `make setup-age-keys` 生成 age 密钥并写入 `dot_config/chezmoi/chezmoi.toml.tmpl` 的 recipient。
+  1. `make setup-age-keys` 生成 age 密钥并写入 `dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl` 的 recipient。
   2. 执行一次 `chezmoi apply`，使 `chezmoi.toml.tmpl` 生效，之后 age 加密可用。
-  3. 执行 `chezmoi add --encrypt ~/.config/keepassxc/chezmoi.kdbx`，源中会生成 `dot_config/keepassxc/chezmoi.kdbx.age`。
+  3. 执行 `chezmoi add --encrypt ~/.config/keepassxc/chezmoi.kdbx`，源中会生成 `dotfiles/dot_config/keepassxc/chezmoi.kdbx.age`。
 
 - **新机器**：
   将 age 私钥放到 `~/.config/chezmoi/age.txt`，在仓库根目录执行 `make bootstrap-chezmoi-config`，再执行 `chezmoi apply`。run_before 会先解密 kdbx，再应用其余配置。
@@ -78,16 +78,16 @@ make keepassxc-entry search  # 搜索
 
 | 配置 | 说明 | 详见 |
 |------|------|------|
-| KeePassXC 数据库 | age 加密存放在 `dot_config/keepassxc/`，apply 时解密到 `~/.config/keepassxc/chezmoi.kdbx` | 见上文「配置 chezmoi」 |
+| KeePassXC 数据库 | age 加密存放在 `dotfiles/dot_config/keepassxc/`，apply 时解密到 `~/.config/keepassxc/chezmoi.kdbx` | 见上文「配置 chezmoi」 |
 | KeePassXC 应用配置 | `keepassxc.ini`：`chezmoi add ~/.config/keepassxc/keepassxc.ini` | — |
-| Kubernetes kubeconfig | age 加密存放在 `private_dot_kube/config.age`，apply 时解密到 `~/.kube/config` | [docs/kubeconfig.md](docs/kubeconfig.md) |
+| Kubernetes kubeconfig | age 加密存放在 `dotfiles/private_dot_kube/config.age`，apply 时解密到 `~/.kube/config` | [docs/kubeconfig.md](docs/kubeconfig.md) |
 | Cursor | settings.json、keybindings.json、snippets，按平台路径管理 | [docs/cursor.md](docs/cursor.md) |
 
 ### 5. 模板与应用配置
 
 在源目录创建 `*.tmpl` 模板，用 `keepassxc "条目名"` 读取 KeePassXC 条目，用 `.Password`、`.Username`、`.URL` 访问字段，用 `keepassxcAttribute "条目名" "属性名"` 读取自定义属性。条目名需与 KeePassXC 中完全一致（区分大小写）；层级路径如 `Internet/MyApp`。
 
-示例（`dot_claude/settings.json.tmpl`）：
+示例（`dotfiles/dot_claude/settings.json.tmpl`）：
 
 ```json
 {
@@ -117,7 +117,7 @@ make test                # 运行测试
 
 ## 版本控制与安全
 
-**可提交到 git**：模板（`*.tmpl`）、chezmoi 配置（`dot_config/chezmoi/chezmoi.toml.tmpl`）、脚本与工具配置、age 加密后的 kdbx（如 `dot_config/keepassxc/chezmoi.kdbx.age`）和 `private_dot_kube/config.age`。
+**可提交到 git**：模板（`*.tmpl`）、chezmoi 配置（`dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl`）、脚本与工具配置、age 加密后的 kdbx（如 `dotfiles/dot_config/keepassxc/chezmoi.kdbx.age`）和 `dotfiles/private_dot_kube/config.age`。
 
 **不提交**：KeePassXC 明文（`*.kdbx`）、age 私钥（`~/.config/chezmoi/age.txt`）、由 chezmoi apply 生成的含敏感信息的文件。
 
@@ -132,7 +132,7 @@ make test                # 运行测试
 
 - **机器特定变量**：`.chezmoidata.toml` 中定义 `[data]`，模板中用 `{{ .email }}` 等。
 - **覆盖 KeePassXC 数据库路径**：在 `~/.config/chezmoi/chezmoi.toml` 中设置 `[keepassxc] database = "/path/to/database.kdbx"`。
-- **预览模板结果**：`chezmoi execute-template < dot_config/app/config.tmpl`（会提示 KeePassXC 密码，不写文件）。
+- **预览模板结果**：`chezmoi execute-template < dotfiles/dot_config/app/config.tmpl`（会提示 KeePassXC 密码，不写文件）。
 
 ## 注意事项
 

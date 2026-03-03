@@ -2,7 +2,7 @@
 # 配置 chezmoi 使用 age：
 # - 生成（或复用）age 私钥到 ~/.config/chezmoi/age.txt
 # - 计算对应公钥
-# - 更新 dot_config/chezmoi/chezmoi.toml.tmpl 中 [age] 的 recipient
+# - 更新 dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl 中 [age] 的 recipient
 #
 # 用法（在 dotfiles 仓库根目录）:
 #   ./scripts/age-keys-configure.sh           # 默认使用 ~/.config/chezmoi/age.txt（不存在则生成）
@@ -12,7 +12,8 @@ set -e
 
 SCRIPT_DIR="${SCRIPT_DIR:-$(dirname "$0")}"
 ROOT="${ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
-TMPL="$ROOT/dot_config/chezmoi/chezmoi.toml.tmpl"
+SOURCE_STATE="${ROOT}/dotfiles"
+TMPL="$SOURCE_STATE/dot_config/chezmoi/chezmoi.toml.tmpl"
 KEY_DIR="${HOME}/.config/chezmoi"
 KEY_FILE="$KEY_DIR/age.txt"
 
@@ -101,4 +102,4 @@ update_template
 
 echo ""
 echo "Done. Private key: $KEY_FILE (do not commit)"
-echo "Public key has been set in dot_config/chezmoi/chezmoi.toml.tmpl"
+echo "Public key has been set in dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl"

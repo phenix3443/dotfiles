@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-# Encrypt ~/.kube/config with age and write to private_dot_kube/config.age.
-# Uses recipient from dot_config/chezmoi/chezmoi.toml.tmpl. Run from repo root.
+# Encrypt ~/.kube/config with age and write to dotfiles/private_dot_kube/config.age.
+# Uses recipient from dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl. Run from repo root.
 #
 # Usage:
 #   ./scripts/encrypt-kubeconfig.sh
@@ -10,9 +10,10 @@ set -e
 
 SCRIPT_DIR="${SCRIPT_DIR:-$(dirname "$0")}"
 ROOT="${ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
-TMPL="$ROOT/dot_config/chezmoi/chezmoi.toml.tmpl"
+SOURCE_STATE="${ROOT}/dotfiles"
+TMPL="$SOURCE_STATE/dot_config/chezmoi/chezmoi.toml.tmpl"
 SRC="${KUBECONFIG:-$HOME/.kube/config}"
-OUT="$ROOT/private_dot_kube/config.age"
+OUT="$SOURCE_STATE/private_dot_kube/config.age"
 
 recipient=$(grep '^recipient = ' "$TMPL" 2>/dev/null | sed 's/.*"\(age1[^"]*\)".*/\1/')
 if [ -z "$recipient" ]; then
