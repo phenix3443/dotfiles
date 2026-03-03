@@ -43,12 +43,13 @@ flowchart LR
 make install              # 安装所有依赖并配置 hooks
 make install-chezmoi      # 仅安装 chezmoi
 make install-keepassxc-cli # 仅安装 keepassxc-cli
-make install-lefthook     # 仅安装 lefthook
-make install-gitleaks     # 仅安装 gitleaks
-make setup-hooks          # 配置 git hooks（需先安装 lefthook）
+make install-age         # 仅安装 age（用于 chezmoi 加密）
+make install-lefthook    # 仅安装 lefthook
+make install-gitleaks    # 仅安装 gitleaks
+make setup-hooks         # 配置 git hooks（需先安装 lefthook）
 make keepassxc-entry [cmd] # KeePassXC 条目增删改查（add|show|edit|rm|ls|search）
-make test                 # 运行测试
-make help                 # 查看所有命令
+make test                # 运行测试
+make help                # 查看所有命令
 ```
 
 **支持平台：**
@@ -81,14 +82,14 @@ make keepassxc-entry add         # 添加条目
 ```
 
 脚本支持完整的 CRUD 操作。添加条目时：
-- 数据库路径（默认 `~/.local/share/chezmoi.kdbx`）
+- 数据库路径（默认 `~/.config/keepassxc/chezmoi.kdbx`）
 - 条目路径（必填，支持 `Group/Entry` 层级）
 - Username/URL/Notes（可选）
 - 密码由 keepassxc-cli 原生提示
 
 #### 方式二：KeePassXC 图形界面
 
-1. 打开 KeePassXC，打开或新建数据库（如 `~/.local/share/chezmoi.kdbx`）
+1. 打开 KeePassXC，打开或新建数据库（如 `~/.config/keepassxc/chezmoi.kdbx`）
 2. 在左侧分组中右键 → **添加新条目**（或 Ctrl+N）
 3. 填写 **标题**、**用户名**、**密码**、**URL** 等字段
 4. 保存（Ctrl+S）
@@ -97,19 +98,47 @@ make keepassxc-entry add         # 添加条目
 
 ### 3. 配置 chezmoi 使用 KeePassXC
 
-创建 `dot_config/chezmoi/chezmoi.toml.tmpl` 配置 KeePassXC 数据库路径：
-
-```toml
-[keepassxc]
-database = "{{ .chezmoi.homeDir }}/.local/share/chezmoi.kdbx"
-```
-
-使用 `{{ .chezmoi.homeDir }}` 实现跨机器可移植。若数据库无密码，可添加：
+本仓库的 `dot_config/chezmoi/chezmoi.toml.tmpl` 中示例配置的 KeePassXC 数据库路径为 `~/.config/keepassxc/chezmoi.kdbx`（你可以根据自己的习惯调整，例如与实际 `keepassxc.ini` 所在目录保持一致），并启用 age 加密（见下节）。该路径本身不受 chezmoi 保护，可直接用 `chezmoi add --encrypt` 加入仓库。使用 `{{ .chezmoi.homeDir }}` 实现跨机器可移植。若数据库无密码，可在模板中添加：
 
 ```toml
 args = ["--no-password"]
 prompt = false
 ```
+
+#### KeePassXC 数据库用 age 加密托管
+
+KeePassXC 数据库文件（`chezmoi.kdbx`）以 age 加密形式存放在仓库中（`dot_config/keepassxc/chezmoi.kdbx.age`），`chezmoi apply` 时会自动解密到 `~/.config/keepassxc/chezmoi.kdbx`。
+
+**首次或本机准备：**
+
+1. **生成 age 密钥并写入 recipient**（私钥仅保存在本机，不要提交到 git）：
+   ```bash
+   make setup-age-keys
+   ```
+   或手动执行 `./scripts/age-keys-configure.sh`。脚本会生成 `~/.config/chezmoi/age.txt`（若不存在），并将公钥写入 `dot_config/chezmoi/chezmoi.toml.tmpl` 的 `recipient`。
+
+2. **让 chezmoi 使用当前配置（含 age 加密）**：  
+   执行一次 `chezmoi apply`，把源里的 `dot_config/chezmoi/chezmoi.toml.tmpl` 应用到 `~/.config/chezmoi/chezmoi.toml`。这样 chezmoi 才能读到 `encryption = "age"`，后续 `chezmoi add --encrypt` 才会生效。
+
+3. **将数据库加入仓库并加密**：  
+   将现有数据库放到 `~/.config/keepassxc/chezmoi.kdbx`（可先 `mkdir -p ~/.config/keepassxc`），然后执行：
+   ```bash
+   chezmoi add --encrypt ~/.config/keepassxc/chezmoi.kdbx
+   ```
+   源目录会生成 `dot_config/keepassxc/chezmoi.kdbx.age`，提交到 git 即可。
+
+**新机器：**  
+将私钥文件放到 `~/.config/chezmoi/age.txt`，拉取仓库后执行 `chezmoi apply`，即可自动解密得到 `~/.config/keepassxc/chezmoi.kdbx` 及正确配置。
+
+#### 用 chezmoi 管理 KeePassXC 应用配置
+
+数据库已与 KeePassXC 应用配置同目录（`~/.config/keepassxc/`）。应用配置（界面、快捷键等）在 `keepassxc.ini`。若要一并纳入 dotfiles，在已有该文件后执行：
+
+```bash
+chezmoi add ~/.config/keepassxc/keepassxc.ini
+```
+
+源目录会生成 `dot_config/keepassxc/keepassxc.ini`，之后由 chezmoi 统一应用即可。
 
 ### 4. 创建配置模板
 
@@ -142,12 +171,6 @@ prompt = false
 
 ### 5. 应用配置
 
-**首次使用前检查配置**：
-
-```bash
-make check-keepassxc  # 检查数据库和条目
-```
-
 **应用配置**：
 
 ```bash
@@ -167,8 +190,11 @@ chezmoi apply ~/.config/app/config.json  # 应用特定文件
 
 ### 不提交到 git
 
-- ❌ KeePassXC 数据库文件（`*.kdbx`）
+- ❌ KeePassXC 数据库明文文件（`*.kdbx`）
+- ❌ age 私钥（如 `~/.config/chezmoi/age.txt`）
 - ❌ 生成的配置文件（由 chezmoi apply 生成）
+
+仓库中仅提交 age 加密后的数据库（`dot_config/keepassxc/chezmoi.kdbx.age`），不提交明文 kdbx 或 age 私钥。
 
 ### 敏感信息检测（多层防护）
 

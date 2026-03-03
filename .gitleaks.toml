@@ -4,9 +4,10 @@
 title = "Gitleaks config for chezmoi dotfiles"
 
 [allowlist]
-description = "Allowlist for template files and tests"
+description = "Allowlist for template files, tests, and age-encrypted dotfiles"
 paths = [
   '''.*\.tmpl$''',
+  '''.*\.kdbx\.age$''',
   '''test_.*\.sh$''',
   '''tests/.*''',
   '''README\.md$''',

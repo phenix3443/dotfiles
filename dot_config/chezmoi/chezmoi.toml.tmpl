@@ -1,2 +1,9 @@
+# age 加密配置（需在文件最前）
+encryption = "age"
+[age]
+identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/age.txt"
+recipient = "age1ysazs0jjmru5hshy9zwap03rpf8qsqg44wmpqx8ux06qqg32kudsmtmpm8"
+
+# 数据库路径：示例值，可按需调整；建议与 KeePassXC 配置目录保持一致，便于由 chezmoi 一起管理
 [keepassxc]
-database = "{{ .chezmoi.homeDir }}/.local/share/chezmoi.kdbx"
+database = "{{ .chezmoi.homeDir }}/.config/keepassxc/chezmoi.kdbx"

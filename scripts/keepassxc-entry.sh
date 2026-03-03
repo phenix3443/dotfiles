@@ -7,7 +7,7 @@ set -e
 # Configuration
 # -----------------------------------------------------------------------------
 
-DEFAULT_DB="${KEEPASSXC_DB:-$HOME/.local/share/chezmoi.kdbx}"
+DEFAULT_DB="${KEEPASSXC_DB:-$HOME/.config/keepassxc/chezmoi.kdbx}"
 
 # -----------------------------------------------------------------------------
 # Helpers
@@ -222,7 +222,7 @@ show_help() {
   echo "  -h, --help    Show this help"
   echo ""
   echo "Environment:"
-  echo "  KEEPASSXC_DB  Default database path (default: ~/.local/share/chezmoi.kdbx)"
+  echo "  KEEPASSXC_DB  Default database path (default: ~/.config/keepassxc/chezmoi.kdbx)"
 }
 
 # -----------------------------------------------------------------------------
