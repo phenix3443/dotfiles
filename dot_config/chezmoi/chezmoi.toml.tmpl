@@ -7,3 +7,7 @@ recipient = "age1ysazs0jjmru5hshy9zwap03rpf8qsqg44wmpqx8ux06qqg32kudsmtmpm8"
 # 数据库路径：示例值，可按需调整；建议与 KeePassXC 配置目录保持一致，便于由 chezmoi 一起管理
 [keepassxc]
 database = "{{ .chezmoi.homeDir }}/.config/keepassxc/chezmoi.kdbx"
+
+[merge]
+command = "bash"
+args = ["-c", "cp {{`{{ .Target }}`}} {{`{{ .Target }}`}}.base && cursor --new-window --wait --merge {{`{{ .Destination }}`}} {{`{{ .Target }}`}} {{`{{ .Target }}`}}.base {{`{{ .Source }}`}}"]

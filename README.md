@@ -150,6 +150,27 @@ chezmoi add ~/.config/keepassxc/keepassxc.ini
 
 源目录会生成 `dot_config/keepassxc/keepassxc.ini`，之后由 chezmoi 统一应用即可。
 
+#### 用 chezmoi 管理 Cursor 配置
+
+适合同步的 Cursor 配置：`settings.json`、`keybindings.json`、`snippets/`。本仓库已按 macOS / Linux / Windows 三平台管理，内容来自 `.chezmoitemplates/` 共享模板，按 OS 应用到对应路径。
+
+**在新机器上首次纳入 Cursor 配置（任选一种路径）：**
+
+- **macOS**：
+  ```bash
+  chezmoi add "$HOME/Library/Application Support/Cursor/User/settings.json"
+  chezmoi add "$HOME/Library/Application Support/Cursor/User/keybindings.json"
+  chezmoi add "$HOME/Library/Application Support/Cursor/User/snippets"
+  ```
+- **Linux**：`chezmoi add ~/.config/Cursor/User/settings.json`（以及 keybindings.json、snippets）
+- **Windows**：`chezmoi add "$APPDATA/Cursor/User/settings.json"` 等
+
+**日常编辑与同步：**
+
+- 改配置：编辑源中的 `.chezmoitemplates/cursor-settings.json.tmpl` 或 `cursor-keybindings.json.tmpl`，然后执行 `chezmoi apply`。
+- 在 Cursor 里改完后同步回 dotfiles：在对应平台执行上述 `chezmoi add` 当前路径的 settings/keybindings/snippets，把内容合并回 `.chezmoitemplates/` 中对应模板；snippets 需在三套路径下保持一致。
+- **路径类设置（按 OS 生成）**：`Preda.path` 仅在 Linux 下用 `{{ .chezmoi.homeDir }}` 生成；`clangd.path`、`GCL.path` 仅在 Windows 下生成。若本机路径与模板中相对 home 的路径不一致，可在 Cursor 里本地覆盖。
+
 ### 4. 创建配置模板
 
 在 chezmoi 源目录创建模板文件，使用 `keepassxc` 函数读取敏感信息。
