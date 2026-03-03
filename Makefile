@@ -7,13 +7,14 @@ INSTALL_BIN ?= $(HOME)/.local/bin
 PATH := $(INSTALL_BIN):$(PATH)
 export PATH
 
-.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry bootstrap-chezmoi-config add show edit rm ls search setup-hooks setup-age-keys ensure-path help test
+.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry bootstrap-chezmoi-config encrypt-kubeconfig add show edit rm ls search setup-hooks setup-age-keys ensure-path help test
 
 help:
 	@echo "Targets:"
 	@echo "  install             - 安装使用 chezmoi 与在 dotfiles 仓库编辑所需的全部依赖并配置 git hooks（一键准备就绪）"
 	@echo "  bootstrap-chezmoi-config - 首次 apply 前：引导 config（encryption、age、keepassxc）"
 	@echo "  setup-age-keys      - 生成 age 密钥并写入 chezmoi.toml.tmpl 的 recipient（首次使用 age 加密前执行）"
+	@echo "  encrypt-kubeconfig  - 用 age 加密 ~/.kube/config 到 private_dot_kube/config.age"
 	@echo "  keepassxc-entry [cmd] - KeePassXC 条目管理（add|show|edit|rm|ls|search）"
 	@echo "  test                - 运行 keepassxc-entry 测试"
 	@echo "  help                - 显示本帮助"
@@ -52,6 +53,9 @@ ensure-path:
 
 setup-age-keys:
 	@ROOT="$(ROOT)" sh "$(SCRIPT_DIR)/age-keys-configure.sh"
+
+encrypt-kubeconfig:
+	@ROOT="$(ROOT)" sh "$(SCRIPT_DIR)/encrypt-kubeconfig.sh"
 
 keepassxc-entry:
 	@sh "$(SCRIPT_DIR)/keepassxc-entry.sh" $(filter-out $@,$(MAKECMDGOALS))
