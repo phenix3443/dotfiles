@@ -7,7 +7,7 @@ INSTALL_BIN ?= $(HOME)/.local/bin
 PATH := $(INSTALL_BIN):$(PATH)
 export PATH
 
-.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry add show edit rm ls search setup-hooks setup-age-keys help test
+.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry add show edit rm ls search setup-hooks setup-age-keys ensure-path help test
 
 help:
 	@echo "Targets:"
@@ -17,7 +17,7 @@ help:
 	@echo "  test                - 运行 keepassxc-entry 测试"
 	@echo "  help                - 显示本帮助"
 
-install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks setup-hooks
+install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks setup-hooks ensure-path
 
 install-chezmoi:
 	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/install-chezmoi.sh"
@@ -42,6 +42,9 @@ setup-hooks:
 		echo "lefthook not found, run 'make install-lefthook' first"; \
 		exit 1; \
 	fi
+
+ensure-path:
+	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/ensure-local-bin-in-path.sh"
 
 setup-age-keys:
 	@ROOT="$(ROOT)" sh "$(SCRIPT_DIR)/age-keys-configure.sh"
