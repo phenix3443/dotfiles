@@ -82,6 +82,7 @@ make keepassxc-entry search  # 搜索
 | KeePassXC 应用配置 | `keepassxc.ini`：`chezmoi add ~/.config/keepassxc/keepassxc.ini` | — |
 | Kubernetes kubeconfig | age 加密存放在 `dotfiles/private_dot_kube/config.age`，apply 时解密到 `~/.kube/config` | [docs/kubeconfig.md](docs/kubeconfig.md) |
 | Cursor | settings.json、keybindings.json、snippets，按平台路径管理 | [docs/cursor.md](docs/cursor.md) |
+| Claude Code | ~/.claude/settings.json，API token/URL 由 KeePassXC 注入 | [docs/claude.md](docs/claude.md) |
 
 ### 5. 模板与应用配置
 

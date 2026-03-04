@@ -1,0 +1,11 @@
+# Claude Code user-level skills manifest (one entry per line).
+# Format: owner/repo [--skill name]
+# Empty lines and lines starting with # are ignored.
+# Applied by run_after_10-install-claude-skills.sh during chezmoi apply.
+
+Kamalnrf/claude-plugins --skill skills-discovery
+anthropics/claude-code --skill frontend-design
+anthropics/skills --skill skill-creator
+OthmanAdi/planning-with-files
+obra/superpowers-skills
+PleasePrompto/notebooklm-skill

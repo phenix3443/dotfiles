@@ -1,4 +1,4 @@
-# Makefile for chezmoi + KeePassXC setup
+# Makefile for chezmoi + KeePassXC setup (entry only; see make/*.mk for targets)
 # Supports: Linux (apt/dnf/pacman/apk/zypper/xbps), macOS (Homebrew/MacPorts), Windows (winget/scoop/choco)
 
 ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
@@ -7,61 +7,14 @@ INSTALL_BIN ?= $(HOME)/.local/bin
 PATH := $(INSTALL_BIN):$(PATH)
 export PATH
 
-.PHONY: install install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks keepassxc-entry bootstrap-chezmoi-config encrypt-kubeconfig add show edit rm ls search setup-hooks setup-age-keys ensure-path help test
+include make/chezmoi.mk make/keepassxc.mk make/age.mk make/lefthook.mk make/gitleaks.mk make/add-skill.mk make/common.mk
 
-help:
-	@echo "Targets:"
-	@echo "  install             - 安装使用 chezmoi 与在 dotfiles 仓库编辑所需的全部依赖并配置 git hooks（一键准备就绪）"
-	@echo "  bootstrap-chezmoi-config - 首次 apply 前：引导 config（encryption、age、keepassxc）"
-	@echo "  setup-age-keys      - 生成 age 密钥并写入 chezmoi.toml.tmpl 的 recipient（首次使用 age 加密前执行）"
-	@echo "  encrypt-kubeconfig  - 用 age 加密 ~/.kube/config 到 private_dot_kube/config.age"
-	@echo "  keepassxc-entry [cmd] - KeePassXC 条目管理（add|show|edit|rm|ls|search）"
-	@echo "  test                - 运行 keepassxc-entry 测试"
-	@echo "  help                - 显示本帮助"
+.PHONY: install help
+.PHONY: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks install-add-skill
+.PHONY: keepassxc-entry bootstrap-chezmoi-config encrypt-kubeconfig add show edit rm ls search
+.PHONY: setup-hooks setup-age-keys ensure-path test
+.PHONY: help-chezmoi help-keepassxc help-age help-add-skill help-common
 
-install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks setup-hooks ensure-path bootstrap-chezmoi-config
+install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks install-add-skill setup-hooks ensure-path bootstrap-chezmoi-config
 
-bootstrap-chezmoi-config:
-	@sh "$(ROOT)scripts/bootstrap-chezmoi-config.sh"
-
-install-chezmoi:
-	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/install-chezmoi.sh"
-
-install-keepassxc-cli:
-	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/install-keepassxc-cli.sh"
-
-install-age:
-	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/install-age.sh"
-
-install-lefthook:
-	@sh "$(SCRIPT_DIR)/install-lefthook.sh"
-
-install-gitleaks:
-	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/install-gitleaks.sh"
-
-setup-hooks:
-	@if command -v lefthook >/dev/null 2>&1; then \
-		lefthook install; \
-		echo "Git hooks installed successfully"; \
-	else \
-		echo "lefthook not found, run 'make install-lefthook' first"; \
-		exit 1; \
-	fi
-
-ensure-path:
-	@INSTALL_BIN="$(INSTALL_BIN)" sh "$(SCRIPT_DIR)/ensure-local-bin-in-path.sh"
-
-setup-age-keys:
-	@ROOT="$(ROOT)" sh "$(SCRIPT_DIR)/age-keys-configure.sh"
-
-encrypt-kubeconfig:
-	@ROOT="$(ROOT)" sh "$(SCRIPT_DIR)/encrypt-kubeconfig.sh"
-
-keepassxc-entry:
-	@sh "$(SCRIPT_DIR)/keepassxc-entry.sh" $(filter-out $@,$(MAKECMDGOALS))
-
-add show edit rm ls search:
-	@:
-
-test:
-	@sh "$(ROOT)tests/test_keepassxc_entry.sh"
+help: help-chezmoi help-add-skill help-age help-keepassxc help-common
