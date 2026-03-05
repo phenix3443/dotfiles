@@ -110,6 +110,13 @@ chezmoi apply
 - **修改 token/URL**：在 KeePassXC 中编辑 `Claude Code` 条目（或使用 `make keepassxc-entry edit`），再执行 `chezmoi apply` 重新生成 `settings.json`。
 - **修改或新增 skills**：编辑 `dotfiles/dot_claude/skills_manifest.txt` 后执行 `chezmoi apply`。
 
+### 本机已改配置如何回写仓库
+
+若在本机直接改过 `~/.claude/settings.json` 或 `~/.claude/skills_manifest.txt`，希望把变更同步回仓库：
+
+- **settings.json**：**禁止**执行 `chezmoi add ~/.claude/settings.json`，否则会把明文 token 写进仓库。应手动把本机文件中的**结构、键、非敏感值**合并到 `dotfiles/dot_claude/settings.json.tmpl`，并**保留** `ANTHROPIC_AUTH_TOKEN`、`ANTHROPIC_BASE_URL` 的模板写法（`{{ (keepassxc "Claude Code").Password }}`、`{{ (keepassxc "Claude Code").URL }}`）。保存后执行 `chezmoi apply` 验证。
+- **skills_manifest.txt**：可编辑仓库中的 `dotfiles/dot_claude/skills_manifest.txt` 与本机清单保持一致；或在仓库根执行 `chezmoi add ~/.claude/skills_manifest.txt`，用本机文件覆盖源文件（该文件无敏感信息）。
+
 ## 参考
 
 - 模板语法与 KeePassXC 集成见主 [README](../README.md) 中「模板与应用配置」。
