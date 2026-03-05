@@ -9,3 +9,5 @@ anthropics/skills --skill skill-creator
 OthmanAdi/planning-with-files
 obra/superpowers-skills
 PleasePrompto/notebooklm-skill
+
+phenix3443/idea-skills --skill soft-copyright-application
