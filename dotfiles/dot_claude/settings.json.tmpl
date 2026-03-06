@@ -4,9 +4,32 @@
     "ANTHROPIC_BASE_URL": "{{ (keepassxc "Claude Code").URL }}",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
   },
+  "defaultMode": "acceptEdits",
   "permissions": {
-    "allow": [],
-    "deny": []
+    "allow": [
+      "Bash(npm *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(git merge *)",
+      "Bash(git pull *)",
+      "Bash(git fetch *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(python *)",
+      "Bash(pip *)",
+      "Bash(go *)",
+      "Bash(cargo *)",
+      "Bash(make *)"
+    ],
+    "deny": [
+      "Bash(git push *)"
+    ]
   },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true
