@@ -8,6 +8,7 @@ description = "Allowlist for template files, tests, and age-encrypted dotfiles"
 paths = [
   '''.*\.tmpl$''',
   '''.*\.kdbx\.age$''',
+  '''.*\.age$''',
   '''test_.*\.sh$''',
   '''tests/.*''',
   '''README\.md$''',
