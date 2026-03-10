@@ -1,4 +1,3 @@
-// Place your key bindings in this file to override the defaultsauto[]
 [
   {
     "key": "ctrl+alt+t",
@@ -7,367 +6,367 @@
   {
     "key": "cmd+b",
     "command": "-markdown.extension.editing.toggleBold",
-    "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k",
     "command": "workbench.action.keychord.leader",
-    "when": "false"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r",
     "command": "-workbench.action.keychord.leader",
-    "when": "false"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+c",
     "command": "editor.action.addCommentLine",
-    "when": "editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+c",
     "command": "-editor.action.addCommentLine",
-    "when": "editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+f",
     "command": "editor.action.formatSelection",
-    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+f",
     "command": "-editor.action.formatSelection",
-    "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+d",
     "command": "editor.action.moveSelectionToNextFindMatch",
-    "when": "editorFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+d",
     "command": "-editor.action.moveSelectionToNextFindMatch",
-    "when": "editorFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k alt+cmd+down",
     "command": "editor.action.nextCommentingRange",
-    "when": "accessibilityModeEnabled && commentFocused || accessibilityModeEnabled && editorFocus || accessibilityHelpIsShown && accessibilityModeEnabled && accessibleViewCurrentProviderId == 'comments'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r alt+cmd+down",
     "command": "-editor.action.nextCommentingRange",
-    "when": "accessibilityModeEnabled && commentFocused || accessibilityModeEnabled && editorFocus || accessibilityHelpIsShown && accessibilityModeEnabled && accessibleViewCurrentProviderId == 'comments'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k alt+cmd+up",
     "command": "editor.action.previousCommentingRange",
-    "when": "accessibilityModeEnabled && commentFocused || accessibilityModeEnabled && editorFocus || accessibilityHelpIsShown && accessibilityModeEnabled && accessibleViewCurrentProviderId == 'comments'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r alt+cmd+up",
     "command": "-editor.action.previousCommentingRange",
-    "when": "accessibilityModeEnabled && commentFocused || accessibilityModeEnabled && editorFocus || accessibilityHelpIsShown && accessibilityModeEnabled && accessibleViewCurrentProviderId == 'comments'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+u",
     "command": "editor.action.removeCommentLine",
-    "when": "editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+u",
     "command": "-editor.action.removeCommentLine",
-    "when": "editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k f12",
     "command": "editor.action.revealDefinitionAside",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r f12",
     "command": "-editor.action.revealDefinitionAside",
-    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+f12",
     "command": "editor.action.revealDefinitionAside",
-    "when": "false"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+f12",
     "command": "-editor.action.revealDefinitionAside",
-    "when": "editorHasDefinitionProvider && editorTextFocus && isWeb && !isInEmbeddedEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+k",
     "command": "editor.action.selectFromAnchorToCursor",
-    "when": "editorTextFocus && selectionAnchorSet"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+k",
     "command": "-editor.action.selectFromAnchorToCursor",
-    "when": "editorTextFocus && selectionAnchorSet"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+b",
     "command": "editor.action.setSelectionAnchor",
-    "when": "editorTextFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+b",
     "command": "-editor.action.setSelectionAnchor",
-    "when": "editorTextFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+i",
     "command": "editor.action.showHover",
-    "when": "editorTextFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+i",
     "command": "-editor.action.showHover",
-    "when": "editorTextFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+x",
     "command": "editor.action.trimTrailingWhitespace",
-    "when": "editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+x",
     "command": "-editor.action.trimTrailingWhitespace",
-    "when": "editorTextFocus && !editorReadonly"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+,",
     "command": "editor.createFoldingRangeFromSelection",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+,",
     "command": "-editor.createFoldingRangeFromSelection",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+i",
     "command": "editor.debug.action.showDebugHover",
-    "when": "editorTextFocus && inDebugMode"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+i",
     "command": "-editor.debug.action.showDebugHover",
-    "when": "editorTextFocus && inDebugMode"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+0",
     "command": "editor.foldAll",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+0",
     "command": "-editor.foldAll",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+/",
     "command": "editor.foldAllBlockComments",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+/",
     "command": "-editor.foldAllBlockComments",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+-",
     "command": "editor.foldAllExcept",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+-",
     "command": "-editor.foldAllExcept",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+8",
     "command": "editor.foldAllMarkerRegions",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+8",
     "command": "-editor.foldAllMarkerRegions",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+1",
     "command": "editor.foldLevel1",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+1",
     "command": "-editor.foldLevel1",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+2",
     "command": "editor.foldLevel2",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+2",
     "command": "-editor.foldLevel2",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+3",
     "command": "editor.foldLevel3",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+3",
     "command": "-editor.foldLevel3",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+4",
     "command": "editor.foldLevel4",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+4",
     "command": "-editor.foldLevel4",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+5",
     "command": "editor.foldLevel5",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+5",
     "command": "-editor.foldLevel5",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+6",
     "command": "editor.foldLevel6",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+6",
     "command": "-editor.foldLevel6",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+7",
     "command": "editor.foldLevel7",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+7",
     "command": "-editor.foldLevel7",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+[",
     "command": "editor.foldRecursively",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+[",
     "command": "-editor.foldRecursively",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+.",
     "command": "editor.removeManualFoldingRanges",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+.",
     "command": "-editor.removeManualFoldingRanges",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+l",
     "command": "editor.toggleFold",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+l",
     "command": "-editor.toggleFold",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k shift+cmd+l",
     "command": "editor.toggleFoldRecursively",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+cmd+l",
     "command": "-editor.toggleFoldRecursively",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+j",
     "command": "editor.unfoldAll",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+j",
     "command": "-editor.unfoldAll",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+=",
     "command": "editor.unfoldAllExcept",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+=",
     "command": "-editor.unfoldAllExcept",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+9",
     "command": "editor.unfoldAllMarkerRegions",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+9",
     "command": "-editor.unfoldAllMarkerRegions",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+]",
     "command": "editor.unfoldRecursively",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+]",
     "command": "-editor.unfoldRecursively",
-    "when": "editorTextFocus && foldingEnabled"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k f2",
     "command": "togglePeekWidgetFocus",
-    "when": "inReferenceSearchEditor || referenceSearchVisible"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r f2",
     "command": "-togglePeekWidgetFocus",
-    "when": "inReferenceSearchEditor || referenceSearchVisible"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k alt+cmd+c",
     "command": "workbench.action.addComment",
-    "when": "activeCursorHasCommentingRange"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r alt+cmd+c",
     "command": "-workbench.action.addComment",
-    "when": "activeCursorHasCommentingRange"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+g",
@@ -380,22 +379,22 @@
   {
     "key": "cmd+k alt+cmd+c",
     "command": "copyFilePath",
-    "when": "editorFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r alt+cmd+c",
     "command": "-copyFilePath",
-    "when": "editorFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k shift+alt+cmd+c",
     "command": "copyRelativeFilePath",
-    "when": "editorFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+alt+cmd+c",
     "command": "-copyRelativeFilePath",
-    "when": "editorFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+k",
@@ -410,102 +409,102 @@
   {
     "key": "cmd+k cmd+a",
     "command": "keybindings.editor.addKeybinding",
-    "when": "inKeybindings && keybindingFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+a",
     "command": "-keybindings.editor.addKeybinding",
-    "when": "inKeybindings && keybindingFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+e",
     "command": "keybindings.editor.defineWhenExpression",
-    "when": "inKeybindings && keybindingFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+e",
     "command": "-keybindings.editor.defineWhenExpression",
-    "when": "inKeybindings && keybindingFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+i",
     "command": "list.showHover",
-    "when": "listFocus && !inputFocus && !treestickyScrollFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+i",
     "command": "-list.showHover",
-    "when": "listFocus && !inputFocus && !treestickyScrollFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k i",
     "command": "notebook.cell.chat.start",
-    "when": "config.notebook.experimental.cellChat && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus || config.notebook.experimental.generate && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r i",
     "command": "-notebook.cell.chat.start",
-    "when": "config.notebook.experimental.cellChat && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus || config.notebook.experimental.generate && notebookChatAgentRegistered && notebookEditable && notebookEditorFocused && !inputFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+c",
     "command": "notebook.cell.collapseCellInput",
-    "when": "notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+c",
     "command": "-notebook.cell.collapseCellInput",
-    "when": "notebookCellListFocused && !inputFocus && !notebookCellInputIsCollapsed"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k t",
     "command": "notebook.cell.collapseCellOutput",
-    "when": "notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r t",
     "command": "-notebook.cell.collapseCellOutput",
-    "when": "notebookCellHasOutputs && notebookCellListFocused && !inputFocus && !notebookCellOutputIsCollapsed"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+c",
     "command": "notebook.cell.expandCellInput",
-    "when": "notebookCellInputIsCollapsed && notebookCellListFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+c",
     "command": "-notebook.cell.expandCellInput",
-    "when": "notebookCellInputIsCollapsed && notebookCellListFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k t",
     "command": "notebook.cell.expandCellOutput",
-    "when": "notebookCellListFocused && notebookCellOutputIsCollapsed"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r t",
     "command": "-notebook.cell.expandCellOutput",
-    "when": "notebookCellListFocused && notebookCellOutputIsCollapsed"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k shift+cmd+\\",
     "command": "notebook.cell.split",
-    "when": "editorTextFocus && notebookCellEditable && notebookEditable && notebookEditorFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+cmd+\\",
     "command": "-notebook.cell.split",
-    "when": "editorTextFocus && notebookCellEditable && notebookEditable && notebookEditorFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k y",
     "command": "notebook.cell.toggleOutputScrolling",
-    "when": "notebookCellHasOutputs && notebookCellListFocused && !inputFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r y",
     "command": "-notebook.cell.toggleOutputScrolling",
-    "when": "notebookCellHasOutputs && notebookCellListFocused && !inputFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k shift+cmd+n",
@@ -542,12 +541,12 @@
   {
     "key": "cmd+k f",
     "command": "workbench.action.closeFolder",
-    "when": "emptyWorkspaceSupport && workbenchState != 'empty'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r f",
     "command": "-workbench.action.closeFolder",
-    "when": "emptyWorkspaceSupport && workbenchState != 'empty'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k u",
@@ -560,32 +559,32 @@
   {
     "key": "cmd+k shift+o",
     "command": "workbench.action.compareEditor.openSide",
-    "when": "inDiffEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+o",
     "command": "-workbench.action.compareEditor.openSide",
-    "when": "inDiffEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k o",
     "command": "workbench.action.copyEditorToNewWindow",
-    "when": "activeEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r o",
     "command": "-workbench.action.copyEditorToNewWindow",
-    "when": "activeEditor"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k m",
     "command": "workbench.action.editor.changeLanguageMode",
-    "when": "!notebookEditorFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r m",
     "command": "-workbench.action.editor.changeLanguageMode",
-    "when": "!notebookEditorFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k p",
@@ -646,12 +645,12 @@
   {
     "key": "cmd+k shift+cmd+\\",
     "command": "workbench.action.joinEditorInGroup",
-    "when": "sideBySideEditorActive"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+cmd+\\",
     "command": "-workbench.action.joinEditorInGroup",
-    "when": "sideBySideEditorActive"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k enter",
@@ -736,12 +735,12 @@
   {
     "key": "cmd+k shift+enter",
     "command": "workbench.action.pinEditor",
-    "when": "!activeEditorIsPinned"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+enter",
     "command": "-workbench.action.pinEditor",
-    "when": "!activeEditorIsPinned"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k alt+cmd+left",
@@ -770,12 +769,12 @@
   {
     "key": "cmd+k shift+cmd+\\",
     "command": "workbench.action.splitEditorInGroup",
-    "when": "activeEditorCanSplitInGroup"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+cmd+\\",
     "command": "-workbench.action.splitEditorInGroup",
-    "when": "activeEditorCanSplitInGroup"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+\\",
@@ -812,42 +811,42 @@
   {
     "key": "cmd+k cmd+i",
     "command": "workbench.action.terminal.focusHover",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalIsOpen || terminalFocus && terminalProcessSupported || terminalHasBeenCreated && terminalTabsFocus || terminalIsOpen && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+i",
     "command": "-workbench.action.terminal.focusHover",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalIsOpen || terminalFocus && terminalProcessSupported || terminalHasBeenCreated && terminalTabsFocus || terminalIsOpen && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+m",
     "command": "workbench.action.toggleMaximizeEditorGroup",
-    "when": "editorPartMaximizedEditorGroup || editorPartMultipleEditorGroups"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r cmd+m",
     "command": "-workbench.action.toggleMaximizeEditorGroup",
-    "when": "editorPartMaximizedEditorGroup || editorPartMultipleEditorGroups"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k z",
     "command": "workbench.action.toggleZenMode",
-    "when": "!isAuxiliaryWindowFocusedContext && !isInBackgroundComposerWindow"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r z",
     "command": "-workbench.action.toggleZenMode",
-    "when": "!isAuxiliaryWindowFocusedContext && !isInBackgroundComposerWindow"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k shift+enter",
     "command": "workbench.action.unpinEditor",
-    "when": "activeEditorIsPinned"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r shift+enter",
     "command": "-workbench.action.unpinEditor",
-    "when": "activeEditorIsPinned"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k c",
@@ -868,111 +867,116 @@
   {
     "key": "cmd+k e",
     "command": "workbench.files.action.focusOpenEditorsView",
-    "when": "workbench.explorer.openEditorsView.active"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r e",
     "command": "-workbench.files.action.focusOpenEditorsView",
-    "when": "workbench.explorer.openEditorsView.active"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k down",
     "command": "views.moveViewDown",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r down",
     "command": "-views.moveViewDown",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k left",
     "command": "views.moveViewLeft",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r left",
     "command": "-views.moveViewLeft",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k right",
     "command": "views.moveViewRight",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r right",
     "command": "-views.moveViewRight",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k up",
     "command": "views.moveViewUp",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r up",
     "command": "-views.moveViewUp",
-    "when": "focusedView != ''"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k alt+cmd+s",
     "command": "git.stageSelectedRanges",
-    "when": "isInDiffEditor && !operationInProgress"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k alt+cmd+s",
     "command": "-git.stageSelectedRanges",
-    "when": "isInDiffEditor && !operationInProgress"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+n",
     "command": "git.unstageSelectedRanges",
-    "when": "isInDiffEditor && !operationInProgress"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+n",
     "command": "-git.unstageSelectedRanges",
-    "when": "isInDiffEditor && !operationInProgress"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k v",
     "command": "markdown.showPreviewToSide",
-    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k v",
     "command": "-markdown.showPreviewToSide",
-    "when": "!notebookEditorFocused && editorLangId == 'markdown'"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+r",
     "command": "git.revertSelectedRanges",
-    "when": "isInDiffEditor && !operationInProgress"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k cmd+r",
     "command": "-git.revertSelectedRanges",
-    "when": "isInDiffEditor && !operationInProgress"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k m",
     "command": "pr.makeSuggestion",
-    "when": "commentEditorFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k m",
     "command": "-pr.makeSuggestion",
-    "when": "commentEditorFocused"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+k z",
     "command": "workbench.action.toggleZenMode",
-    "when": "!isAuxiliaryWindowFocusedContext"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   },
   {
     "key": "cmd+r z",
     "command": "-workbench.action.toggleZenMode",
-    "when": "!isAuxiliaryWindowFocusedContext"
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
+  },
+  {
+    "key": "alt+cmd+s",
+    "command": "workbench.action.toggleUnifiedSidebarFromKeyboard",
+    "when": "resource == 'vscode-userdata:{{ if eq .chezmoi.os "darwin" }}{{ .chezmoi.homeDir }}/Library/Application%20Support/Cursor/User/keybindings.json{{ else if eq .chezmoi.os "linux" }}{{ .chezmoi.homeDir }}/.config/Cursor/User/keybindings.json{{ else }}{{ .chezmoi.homeDir }}/AppData/Roaming/Cursor/User/keybindings.json{{ end }}'"
   }
 ]
