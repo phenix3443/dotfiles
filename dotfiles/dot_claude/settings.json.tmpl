@@ -5,6 +5,7 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
   },
   "permissions": {
+    "defaultMode": "bypassPermissions",
     "allow": [
       "localhost",
       "127.0.0.1",
@@ -47,7 +48,8 @@
       "Bash(go vet *)",
       "Bash(cargo check *)",
       "Bash(docker ps *)",
-      "Bash(docker images *)"
+      "Bash(docker images *)",
+      "Bash(curl *)"
     ],
     "deny": []
   },
