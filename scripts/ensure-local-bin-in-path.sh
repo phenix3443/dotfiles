@@ -19,9 +19,17 @@ RC="$(choose_rc)"
 # 若配置文件不存在则创建
 [ -f "$RC" ] || touch "$RC"
 
-# 是否已包含将 .local/bin 加入 PATH 的配置（避免重复）
+ZSH_CONFD="${ZSH_CONFD:-$HOME/.config/zsh/conf.d}"
+
 already_has_path() {
-  grep -qE '\.local/bin.*PATH|PATH.*\.local/bin' "$RC" 2>/dev/null || false
+  grep -qE '\.local/bin.*PATH|PATH.*\.local/bin' "$RC" 2>/dev/null && return 0
+  if [ -d "$ZSH_CONFD" ]; then
+    for f in "$ZSH_CONFD"/*.zsh; do
+      [ -f "$f" ] || continue
+      grep -qE '\.local/bin.*PATH|PATH.*\.local/bin' "$f" 2>/dev/null && return 0
+    done
+  fi
+  return 1
 }
 
 LINE='export PATH="$HOME/.local/bin:$PATH"'

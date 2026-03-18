@@ -41,7 +41,8 @@ chezmoi apply                  # 应用所有配置（需输入 KeePassXC 数据
 | SSH | 模块化配置 + age 加密 + 自动同步 | [docs/ssh.md](docs/ssh.md) |
 | Kubernetes | kubeconfig（age 加密） | [docs/kubeconfig.md](docs/kubeconfig.md) |
 | Cursor | settings.json、keybindings.json | [docs/cursor.md](docs/cursor.md) |
-| Claude Code | `dot_claude/settings.json`（明文）；API Key 放 ~/.zshrc | [docs/claude.md](docs/claude.md) |
+| Claude Code | `dot_claude/settings.json`；终端 API 变量见 `claude.zsh.tmpl`（KeePassXC） | [docs/claude.md](docs/claude.md) |
+| Zsh | `dot_zshrc` + `conf.d/`；Claude token/URL 见 `claude.zsh.tmpl`（KeePassXC） | [docs/zsh.md](docs/zsh.md) |
 | 文件监控 | 通用后台服务，自动同步所有管理的文件 | [docs/watcher.md](docs/watcher.md) |
 
 ## 命令速查
@@ -65,6 +66,9 @@ chezmoi apply                  # 应用所有配置（需输入 KeePassXC 数据
 | `chezmoi diff` | 预览变更 |
 | `make apply-ssh` | 仅应用 SSH 配置 |
 | `make apply-claude` | 仅应用 Claude 配置（普通 settings.json） |
+| `make apply-zsh` | 仅应用 ~/.zshrc 与 ~/.config/zsh |
+| `make sync-zsh` | 本机 zsh / conf.d 写回仓库（跳过 claude.zsh） |
+| `make check-sync` | 中文提示：哪些配置与仓库不一致；未覆盖项见脚本末尾说明 |
 | `make apply-cursor` | 仅应用 Cursor 配置 |
 | `make sync-ssh` | 同步本地 SSH 配置到仓库 |
 | `make sync-claude` | 本机 Claude 配置原样写回仓库（提交前勿含密钥） |
@@ -100,7 +104,7 @@ chezmoi apply                  # 应用所有配置（需输入 KeePassXC 数据
 }
 ```
 
-Claude Code 使用 `dot_claude/settings.json`（明文）；API Key 建议放在 `~/.zshrc` 的 `export ANTHROPIC_API_KEY=...`，见 [docs/claude.md](docs/claude.md)。
+Claude Code：`dot_claude/settings.json`；终端里 Claude API 变量由 `conf.d/claude.zsh.tmpl`（KeePassXC）生成，见 [docs/zsh.md](docs/zsh.md)、[docs/claude.md](docs/claude.md)。
 
 自定义属性使用 `{{ keepassxcAttribute "EntryName" "AttributeName" }}`。
 

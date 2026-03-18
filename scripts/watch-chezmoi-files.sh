@@ -116,6 +116,9 @@ sync_changes() {
   elif [[ "$changed_file" =~ /.claude/ ]]; then
     sync_script="$SCRIPT_DIR/sync-claude-config.sh"
     file_type="Claude"
+  elif [[ "$changed_file" =~ /\.zshrc$ ]] || [[ "$changed_file" =~ /zsh/conf\.d/ ]]; then
+    sync_script="$SCRIPT_DIR/sync-zsh-config.sh"
+    file_type="Zsh"
   elif [[ "$changed_file" =~ /Cursor/ ]] || [[ "$changed_file" =~ /.config/Cursor/ ]]; then
     sync_script="$SCRIPT_DIR/sync-cursor-config.sh"
     file_type="Cursor"

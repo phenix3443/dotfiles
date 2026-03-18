@@ -96,7 +96,8 @@ dotfiles/                       # chezmoi source state (via .chezmoiroot)
   .chezmoiscripts/              # run_before / run_after hooks
   .chezmoitemplates/            # shared templates (Cursor configs)
   dot_claude/                   # Claude Code config
-  dot_config/                   # ~/.config (chezmoi, keepassxc)
+  dot_zshrc                     # ~/.zshrc
+  dot_config/                   # ~/.config (chezmoi, keepassxc, zsh/conf.d)
   private_dot_ssh/              # SSH configs (encrypted .sconf, scripts)
   private_dot_kube/             # Kubernetes kubeconfig (encrypted)
   private_Library/              # macOS Library (Cursor on macOS)
@@ -104,7 +105,7 @@ dotfiles/                       # chezmoi source state (via .chezmoiroot)
 
 make/                           # modular Makefile components
   chezmoi.mk keepassxc.mk age.mk ssh.mk watcher.mk
-  claude.mk cursor.mk
+  claude.mk cursor.mk zsh.mk
   lefthook.mk gitleaks.mk add-skill.mk common.mk
 
 scripts/                        # installation and management scripts
@@ -120,7 +121,7 @@ scripts/                        # installation and management scripts
 
 tests/                          # test scripts
 docs/                           # detailed documentation
-  ssh.md watcher.md claude.md cursor.md kubeconfig.md
+  ssh.md watcher.md claude.md cursor.md kubeconfig.md zsh.md
 ```
 
 ## Important Notes
