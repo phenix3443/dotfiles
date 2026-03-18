@@ -32,7 +32,7 @@ make install-chezmoi-watcher
 | 文件路径 | 同步方式 | 说明 |
 |---------|---------|------|
 | `~/.ssh/` | `sync-ssh-config.sh` | 自动使用 `--encrypt` 处理 .sconf 文件 |
-| `~/.claude/` | `sync-claude-config.sh` | 保留模板占位符 |
+| `~/.claude/` | `sync-claude-config.sh` | 原样拷回 settings.json / skills_manifest |
 | Cursor 配置 | `sync-cursor-config.sh` | 保留模板占位符 |
 | 其他文件 | `chezmoi add` | 通用处理 |
 

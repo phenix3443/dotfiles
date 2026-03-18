@@ -109,7 +109,7 @@ make/                           # modular Makefile components
 
 scripts/                        # installation and management scripts
   sync-ssh-config.sh            # SSH config sync (with encryption)
-  sync-claude-config.sh         # Claude config sync (preserves templates)
+  sync-claude-config.sh         # Claude config sync (plain JSON copy)
   sync-cursor-config.sh         # Cursor config sync (preserves templates)
   watch-chezmoi-files.sh        # Universal file watcher
   install-chezmoi-watcher.sh    # Universal watcher service installer

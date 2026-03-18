@@ -4,8 +4,8 @@
 
 help-claude:
 	@echo "  install-claude      - 检测并安装 Claude Code CLI（macOS: brew cask / 官方脚本，Linux: 官方脚本 / npm）"
-	@echo "  sync-claude         - Sync local Claude config to repository (preserves template placeholders)"
-	@echo "  apply-claude        - Apply only Claude configuration via chezmoi (~/.claude)"
+	@echo "  sync-claude         - 将 ~/.claude/settings.json 与 skills_manifest 原样拷回 dotfiles/dot_claude/"
+	@echo "  apply-claude        - chezmoi 仅应用 ~/.claude（源文件为普通 JSON，非模板）"
 
 install-claude:
 	@sh "$(SCRIPT_DIR)/install-claude.sh"
