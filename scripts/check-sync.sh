@@ -33,7 +33,7 @@ diff_plain() {
 
 echo "=== check-sync：哪些配置和仓库不一致 ==="
 echo ""
-echo "【本段会检查】~/.zshrc、conf.d 下非模板的 .zsh、Claude settings/skills、Cursor User、~/.ssh"
+echo "【本段会检查】~/.zshrc、conf.d 下非模板的 .zsh、Claude settings/skills/MCP、Cursor User、~/.ssh"
 echo ""
 
 zsh_any=0
@@ -54,7 +54,33 @@ claude_any=0
 echo "--- Claude ---"
 if diff_plain "settings.json" "make sync-claude" "$HOME/.claude/settings.json" "$DOTFILES/dot_claude/settings.json"; then claude_any=1; fi
 if diff_plain "skills_manifest.txt" "make sync-claude" "$HOME/.claude/skills_manifest.txt" "$DOTFILES/dot_claude/skills_manifest.txt"; then claude_any=1; fi
-if [ "$claude_any" -eq 0 ]; then echo "  （与仓库一致，或本机/仓库缺文件）"; fi
+if command -v jq >/dev/null 2>&1 && [ -f "$HOME/.claude.json" ] && [ -f "$DOTFILES/dot_claude/mcp_servers.json" ]; then
+  if local_m=$(jq -c -S '.mcpServers // {}' "$HOME/.claude.json" 2>/dev/null) &&
+    repo_m=$(jq -c -S '.' "$DOTFILES/dot_claude/mcp_servers.json" 2>/dev/null); then
+    if [ "$local_m" != "$repo_m" ]; then
+      echo "  · mcp_servers（~/.claude.json 的 mcpServers）：与仓库不一致 → 可执行 make sync-claude 写回"
+      claude_any=1
+    fi
+  else
+    echo "  · mcp_servers：无法解析 ~/.claude.json 或仓库 mcp_servers.json"
+    claude_any=1
+  fi
+elif ! command -v jq >/dev/null 2>&1; then
+  echo "  （未对比 mcp_servers.json：未安装 jq）"
+fi
+if [ "$claude_any" -eq 0 ]; then
+  if command -v jq >/dev/null 2>&1 && [ -f "$HOME/.claude.json" ] && [ -f "$DOTFILES/dot_claude/mcp_servers.json" ]; then
+    echo "  （Claude 与仓库一致）"
+  elif ! command -v jq >/dev/null 2>&1; then
+    echo "  （settings/skills 与仓库一致；mcp_servers 需 jq 才可对比）"
+  elif [ ! -f "$HOME/.claude.json" ]; then
+    echo "  （settings/skills 与仓库一致；无 ~/.claude.json，未对比 MCP）"
+  elif [ ! -f "$DOTFILES/dot_claude/mcp_servers.json" ]; then
+    echo "  （settings/skills 与仓库一致；仓库无 mcp_servers.json，未对比 MCP）"
+  else
+    echo "  （与仓库一致，或本机/仓库缺文件）"
+  fi
+fi
 echo ""
 
 echo "--- Cursor ---"

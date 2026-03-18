@@ -63,6 +63,30 @@ sync_skills_manifest() {
   return 0
 }
 
+sync_mcp_servers() {
+  local claude_json="${HOME}/.claude.json"
+  local repo_file="$TEMPLATE_DIR/mcp_servers.json"
+
+  if ! command -v jq >/dev/null 2>&1; then
+    echo "Warning: jq not found; skipping mcp_servers.json sync." >&2
+    return 0
+  fi
+  if [ ! -f "$claude_json" ]; then
+    echo "Warning: ~/.claude.json not found; skipping mcp_servers.json sync." >&2
+    return 0
+  fi
+
+  echo "Processing mcp_servers.json..."
+  if ! jq '.mcpServers // {}' "$claude_json" >"${repo_file}.tmp"; then
+    echo "Warning: failed to extract mcpServers from ~/.claude.json" >&2
+    rm -f "${repo_file}.tmp"
+    return 0
+  fi
+  mv "${repo_file}.tmp" "$repo_file"
+  echo "  Wrote dotfiles/dot_claude/mcp_servers.json"
+  return 0
+}
+
 echo "=== Syncing Claude Configuration ==="
 echo ""
 
@@ -84,6 +108,9 @@ else
 fi
 
 echo ""
+sync_mcp_servers
+echo ""
+
 echo "=== Sync Summary ==="
 echo "Success: $SUCCESS_COUNT file(s)"
 echo "Failed: $FAIL_COUNT file(s)"
