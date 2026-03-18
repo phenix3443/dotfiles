@@ -80,6 +80,7 @@ make keepassxc-entry search  # 搜索
 |------|------|------|
 | KeePassXC 数据库 | age 加密存放在 `dotfiles/dot_config/keepassxc/`，apply 时解密到 `~/.config/keepassxc/chezmoi.kdbx` | 见上文「配置 chezmoi」 |
 | KeePassXC 应用配置 | `keepassxc.ini`：`chezmoi add ~/.config/keepassxc/keepassxc.ini` | — |
+| SSH 配置 | 模块化配置（config、*.sconf）使用 age 加密，支持自动监控同步 | [docs/ssh-watcher.md](docs/ssh-watcher.md) |
 | Kubernetes kubeconfig | age 加密存放在 `dotfiles/private_dot_kube/config.age`，apply 时解密到 `~/.kube/config` | [docs/kubeconfig.md](docs/kubeconfig.md) |
 | Cursor | settings.json、keybindings.json、snippets，按平台路径管理 | [docs/cursor.md](docs/cursor.md) |
 | Claude Code | ~/.claude/settings.json，API token/URL 由 KeePassXC 注入 | [docs/claude.md](docs/claude.md) |
@@ -111,9 +112,16 @@ apply 时会提示 KeePassXC 数据库密码；生成的文件含真实敏感信
 ## 常用命令
 
 ```bash
-make help                # 查看所有 make target
-make keepassxc-entry add # KeePassXC 条目增删改查（add|show|edit|rm|ls|search）
-make test                # 运行测试
+make help                     # 查看所有 make target
+make keepassxc-entry add      # KeePassXC 条目增删改查（add|show|edit|rm|ls|search）
+make test                     # 运行测试
+
+# SSH 配置管理
+make sync-ssh                 # 手动同步 SSH 配置到 chezmoi
+make apply-ssh                # 应用 SSH 配置到本地
+make install-ssh-watcher      # 安装自动监控服务（推荐）
+make status-ssh-watcher       # 查看监控服务状态
+make logs-ssh-watcher         # 查看监控服务日志
 ```
 
 ## 版本控制与安全
@@ -128,6 +136,51 @@ make test                # 运行测试
 - **GitHub Actions（TruffleHog）**：CI 深度扫描与历史扫描，配置见 `.github/workflows/secret-scanning.yml`。
 
 两阶段组合使用：Gitleaks 本地即时反馈，TruffleHog 做 CI 与历史兜底。配置文件：`lefthook.yml`、`.gitleaks.toml`、`.github/workflows/secret-scanning.yml`。
+
+## SSH 配置管理
+
+本仓库支持模块化的 SSH 配置管理，配置文件使用 age 加密，并提供自动监控同步功能。
+
+### 配置结构
+
+```
+~/.ssh/
+├── config                    # 主配置文件（Include 指令）
+├── config.d/                 # 模块化配置目录
+│   ├── personal.sconf        # 个人设备配置
+│   ├── vps.sconf            # VPS 配置
+│   └── ...                  # 其他配置模块
+└── bin/                     # 辅助脚本
+    ├── ssh-detect-env
+    └── ssh-tailscale-up
+```
+
+### 快速开始
+
+```bash
+# 1. 手动同步配置到 chezmoi（首次或手动更新时）
+make sync-ssh
+
+# 2. 安装自动监控服务（推荐）
+make install-ssh-watcher
+
+# 3. 编辑配置文件，自动同步会在 3 秒后触发
+vim ~/.ssh/config.d/personal.sconf
+
+# 4. 查看自动同步日志
+make logs-ssh-watcher
+```
+
+### 自动监控功能
+
+安装 `make install-ssh-watcher` 后，系统会：
+- 自动检测并安装 `fswatch`（如果未安装）
+- 创建后台服务（macOS LaunchAgent / Linux systemd）
+- 实时监控 `~/.ssh/config`、`~/.ssh/config.d/`、`~/.ssh/bin/` 的变化
+- 文件修改后 3 秒自动同步到 chezmoi 仓库
+- 所有 `.sconf` 文件自动使用 age 加密
+
+详细文档请参考：[docs/ssh-watcher.md](docs/ssh-watcher.md)
 
 ## 高级用法
 

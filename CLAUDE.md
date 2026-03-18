@@ -11,7 +11,8 @@ This is a chezmoi-managed dotfiles repository with integrated KeePassXC for secu
 **Core Components:**
 - **chezmoi templates** (`dotfiles/**/*.tmpl`): Template files that inject secrets from KeePassXC at apply time
 - **KeePassXC integration**: Credentials stored in `~/.config/keepassxc/chezmoi.kdbx`, accessed via `keepassxc` template function
-- **age encryption**: Sensitive files (KeePassXC database, kubeconfig) encrypted with age before committing
+- **age encryption**: Sensitive files (KeePassXC database, kubeconfig, SSH configs) encrypted with age before committing
+- **SSH config management**: Modular SSH configs with auto-sync watcher service (see `docs/ssh-watcher.md`)
 - **Makefile system**: Modular makefiles in `make/*.mk` for installation, configuration, and management tasks
 
 **Template System:**
@@ -57,6 +58,16 @@ make setup-age-keys        # Generate age keypair, update chezmoi.toml.tmpl reci
 make encrypt-kubeconfig    # Encrypt ~/.kube/config to dotfiles/private_dot_kube/config.age
 ```
 
+**SSH Config Management:**
+```bash
+make sync-ssh              # Sync local SSH config to repository (manual)
+make apply-ssh             # Apply SSH config from repository
+make install-ssh-watcher   # Install auto-sync watcher service (auto-detects and installs fswatch)
+make status-ssh-watcher    # Show watcher service status
+make logs-ssh-watcher      # View watcher service logs
+make uninstall-ssh-watcher # Uninstall watcher service
+```
+
 **Testing:**
 ```bash
 make test  # Run keepassxc-entry tests
@@ -73,6 +84,7 @@ make test  # Run keepassxc-entry tests
 **Managing Encrypted Files:**
 - For KeePassXC database: `chezmoi add --encrypt ~/.config/keepassxc/chezmoi.kdbx`
 - For kubeconfig: `make encrypt-kubeconfig`
+- For SSH configs: `chezmoi add --encrypt ~/.ssh/config.d/*.sconf` (or use `make sync-ssh`)
 - Encrypted files stored as `*.age` in source state
 
 **New Machine Setup:**
@@ -84,9 +96,14 @@ make test  # Run keepassxc-entry tests
 ## File Structure
 
 - `dotfiles/` - chezmoi source state (actual source root via `.chezmoiroot`)
-- `make/*.mk` - modular Makefile components (chezmoi, keepassxc, age, lefthook, gitleaks, add-skill, claude, common)
+  - `private_dot_ssh/` - SSH configs (encrypted .sconf files, scripts)
+- `make/*.mk` - modular Makefile components (chezmoi, keepassxc, age, ssh, lefthook, gitleaks, add-skill, claude, cursor, common)
 - `scripts/` - installation and management scripts
+  - `sync-ssh-config.sh` - SSH config sync script
+  - `watch-ssh-config.sh` - SSH config file watcher
+  - `install-ssh-watcher.sh` - SSH watcher service installer
 - `tests/` - test scripts for utilities
+- `docs/` - documentation (ssh-watcher.md, kubeconfig.md, claude.md, cursor.md)
 - `.gitleaks.toml` - gitleaks configuration for secret scanning
 - `lefthook.yml` - git hooks configuration (pre-commit: gitleaks)
 
