@@ -12,7 +12,7 @@ This is a chezmoi-managed dotfiles repository with integrated KeePassXC for secu
 - **chezmoi templates** (`dotfiles/**/*.tmpl`): Template files that inject secrets from KeePassXC at apply time
 - **KeePassXC integration**: Credentials stored in `~/.config/keepassxc/chezmoi.kdbx`, accessed via `keepassxc` template function
 - **age encryption**: Sensitive files (KeePassXC database, kubeconfig, SSH configs) encrypted with age before committing
-- **SSH config management**: Modular SSH configs with auto-sync watcher service (see `docs/ssh-watcher.md`)
+- **File watcher**: Universal auto-sync service monitoring all managed files (see `docs/watcher.md`)
 - **Makefile system**: Modular makefiles in `make/*.mk` for installation, configuration, and management tasks
 
 **Template System:**
@@ -31,17 +31,8 @@ This is a chezmoi-managed dotfiles repository with integrated KeePassXC for secu
 **Installation & Setup:**
 ```bash
 make install                    # Install all dependencies, setup hooks, bootstrap config
-make install INSTALL_BIN=~/bin  # Specify custom binary directory (default: ~/.local/bin)
-```
-
-**KeePassXC Entry Management:**
-```bash
-make keepassxc-entry add     # Add new entry (prompts for path, username, URL, password)
-make keepassxc-entry show    # Show entry details
-make keepassxc-entry edit    # Edit existing entry
-make keepassxc-entry rm      # Remove entry
-make keepassxc-entry ls      # List all entries
-make keepassxc-entry search  # Search entries
+make setup-age-keys             # Generate age keypair
+make bootstrap-chezmoi-config   # Bootstrap config on new machine
 ```
 
 **chezmoi Operations:**
@@ -52,36 +43,30 @@ chezmoi diff                            # Preview changes before applying
 chezmoi execute-template < file.tmpl    # Test template rendering without writing
 ```
 
-**Age Encryption Setup:**
+**Per-app Sync & Apply:**
 ```bash
-make setup-age-keys        # Generate age keypair, update chezmoi.toml.tmpl recipient
-make encrypt-kubeconfig    # Encrypt ~/.kube/config to dotfiles/private_dot_kube/config.age
+make sync-ssh / make apply-ssh          # SSH config
+make sync-claude / make apply-claude    # Claude Code config
+make sync-cursor / make apply-cursor    # Cursor config
+make encrypt-kubeconfig                 # Kubernetes kubeconfig
 ```
 
-**SSH Config Management:**
+**File Watcher (recommended):**
 ```bash
-make sync-ssh              # Sync local SSH config to repository (manual)
-make apply-ssh             # Apply SSH config from repository
-make install-ssh-watcher   # Install SSH-specific watcher service
+make install-chezmoi-watcher            # Install universal watcher for ALL managed files
+make status-chezmoi-watcher             # Show watcher service status
+make logs-chezmoi-watcher               # View watcher service logs
+make uninstall-chezmoi-watcher          # Uninstall watcher service
 ```
 
-**Universal File Watcher (Recommended):**
+**KeePassXC Entry Management:**
 ```bash
-make install-chezmoi-watcher   # Install universal watcher for ALL managed files
-make status-chezmoi-watcher    # Show watcher service status
-make logs-chezmoi-watcher      # View watcher service logs
-make uninstall-chezmoi-watcher # Uninstall watcher service
+make keepassxc-entry add|show|edit|rm|ls|search
 ```
-
-The universal watcher automatically:
-- Detects all chezmoi-managed files
-- Watches directories: ~/.ssh, ~/.claude, ~/.config, Cursor configs, etc.
-- Routes to specific sync scripts (SSH, Claude, Cursor) or uses generic `chezmoi add`
-- Auto-detects and installs fswatch if needed
 
 **Testing:**
 ```bash
-make test  # Run keepassxc-entry tests
+make test                               # Run keepassxc-entry tests
 ```
 
 ## Development Workflow
@@ -106,17 +91,37 @@ make test  # Run keepassxc-entry tests
 
 ## File Structure
 
-- `dotfiles/` - chezmoi source state (actual source root via `.chezmoiroot`)
-  - `private_dot_ssh/` - SSH configs (encrypted .sconf files, scripts)
-- `make/*.mk` - modular Makefile components (chezmoi, keepassxc, age, ssh, lefthook, gitleaks, add-skill, claude, cursor, common)
-- `scripts/` - installation and management scripts
-  - `sync-ssh-config.sh` - SSH config sync script
-  - `watch-ssh-config.sh` - SSH config file watcher
-  - `install-ssh-watcher.sh` - SSH watcher service installer
-- `tests/` - test scripts for utilities
-- `docs/` - documentation (ssh-watcher.md, kubeconfig.md, claude.md, cursor.md)
-- `.gitleaks.toml` - gitleaks configuration for secret scanning
-- `lefthook.yml` - git hooks configuration (pre-commit: gitleaks)
+```
+dotfiles/                       # chezmoi source state (via .chezmoiroot)
+  .chezmoiscripts/              # run_before / run_after hooks
+  .chezmoitemplates/            # shared templates (Cursor configs)
+  dot_claude/                   # Claude Code config
+  dot_config/                   # ~/.config (chezmoi, keepassxc)
+  private_dot_ssh/              # SSH configs (encrypted .sconf, scripts)
+  private_dot_kube/             # Kubernetes kubeconfig (encrypted)
+  private_Library/              # macOS Library (Cursor on macOS)
+  AppData/                      # Windows AppData (Cursor on Windows)
+
+make/                           # modular Makefile components
+  chezmoi.mk keepassxc.mk age.mk ssh.mk watcher.mk
+  claude.mk cursor.mk
+  lefthook.mk gitleaks.mk add-skill.mk common.mk
+
+scripts/                        # installation and management scripts
+  sync-ssh-config.sh            # SSH config sync (with encryption)
+  sync-claude-config.sh         # Claude config sync (preserves templates)
+  sync-cursor-config.sh         # Cursor config sync (preserves templates)
+  watch-chezmoi-files.sh        # Universal file watcher
+  install-chezmoi-watcher.sh    # Universal watcher service installer
+  watch-ssh-config.sh           # SSH-specific file watcher
+  install-ssh-watcher.sh        # SSH watcher service installer
+  install-*.sh                  # Tool installation scripts
+  encrypt-kubeconfig.sh         # Kubeconfig encryption
+
+tests/                          # test scripts
+docs/                           # detailed documentation
+  ssh.md watcher.md claude.md cursor.md kubeconfig.md
+```
 
 ## Important Notes
 
