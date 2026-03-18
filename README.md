@@ -119,9 +119,13 @@ make test                     # 运行测试
 # SSH 配置管理
 make sync-ssh                 # 手动同步 SSH 配置到 chezmoi
 make apply-ssh                # 应用 SSH 配置到本地
-make install-ssh-watcher      # 安装自动监控服务（推荐）
-make status-ssh-watcher       # 查看监控服务状态
-make logs-ssh-watcher         # 查看监控服务日志
+make install-ssh-watcher      # 安装 SSH 专用监控服务
+
+# 通用文件监控（推荐）
+make install-chezmoi-watcher  # 安装通用监控服务（监控所有 chezmoi 管理的文件）
+make status-chezmoi-watcher   # 查看监控服务状态
+make logs-chezmoi-watcher     # 查看监控服务日志
+make uninstall-chezmoi-watcher # 卸载监控服务
 ```
 
 ## 版本控制与安全
@@ -173,12 +177,23 @@ make logs-ssh-watcher
 
 ### 自动监控功能
 
-安装 `make install-ssh-watcher` 后，系统会：
+#### 通用文件监控（推荐）
+
+安装 `make install-chezmoi-watcher` 后，系统会：
 - 自动检测并安装 `fswatch`（如果未安装）
 - 创建后台服务（macOS LaunchAgent / Linux systemd）
-- 实时监控 `~/.ssh/config`、`~/.ssh/config.d/`、`~/.ssh/bin/` 的变化
+- **自动发现所有 chezmoi 管理的文件**并监控
+- 实时监控包括：`~/.ssh`、`~/.claude`、`~/.config`、Cursor 配置等
 - 文件修改后 3 秒自动同步到 chezmoi 仓库
-- 所有 `.sconf` 文件自动使用 age 加密
+- 智能路由：SSH/Claude/Cursor 使用专用同步脚本，其他文件使用 `chezmoi add`
+- 所有敏感文件自动使用 age 加密
+
+#### SSH 专用监控
+
+如果只需要监控 SSH 配置，可以使用：
+```bash
+make install-ssh-watcher  # 仅监控 SSH 配置
+```
 
 详细文档请参考：[docs/ssh-watcher.md](docs/ssh-watcher.md)
 

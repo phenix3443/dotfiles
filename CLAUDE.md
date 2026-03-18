@@ -62,11 +62,22 @@ make encrypt-kubeconfig    # Encrypt ~/.kube/config to dotfiles/private_dot_kube
 ```bash
 make sync-ssh              # Sync local SSH config to repository (manual)
 make apply-ssh             # Apply SSH config from repository
-make install-ssh-watcher   # Install auto-sync watcher service (auto-detects and installs fswatch)
-make status-ssh-watcher    # Show watcher service status
-make logs-ssh-watcher      # View watcher service logs
-make uninstall-ssh-watcher # Uninstall watcher service
+make install-ssh-watcher   # Install SSH-specific watcher service
 ```
+
+**Universal File Watcher (Recommended):**
+```bash
+make install-chezmoi-watcher   # Install universal watcher for ALL managed files
+make status-chezmoi-watcher    # Show watcher service status
+make logs-chezmoi-watcher      # View watcher service logs
+make uninstall-chezmoi-watcher # Uninstall watcher service
+```
+
+The universal watcher automatically:
+- Detects all chezmoi-managed files
+- Watches directories: ~/.ssh, ~/.claude, ~/.config, Cursor configs, etc.
+- Routes to specific sync scripts (SSH, Claude, Cursor) or uses generic `chezmoi add`
+- Auto-detects and installs fswatch if needed
 
 **Testing:**
 ```bash
