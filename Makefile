@@ -7,14 +7,14 @@ INSTALL_BIN ?= $(HOME)/.local/bin
 PATH := $(INSTALL_BIN):$(PATH)
 export PATH
 
-include make/chezmoi.mk make/keepassxc.mk make/age.mk make/lefthook.mk make/gitleaks.mk make/add-skill.mk make/claude.mk make/cursor.mk make/common.mk
+include make/chezmoi.mk make/keepassxc.mk make/age.mk make/lefthook.mk make/gitleaks.mk make/add-skill.mk make/claude.mk make/cursor.mk make/ssh.mk make/common.mk
 
 .PHONY: install help
 .PHONY: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks install-add-skill install-claude
-.PHONY: keepassxc-entry bootstrap-chezmoi-config encrypt-kubeconfig add show edit rm ls search apply-cursor apply-claude
+.PHONY: keepassxc-entry bootstrap-chezmoi-config encrypt-kubeconfig add show edit rm ls search apply-cursor apply-claude sync-ssh apply-ssh
 .PHONY: setup-hooks setup-age-keys ensure-path test
-.PHONY: help-chezmoi help-keepassxc help-age help-add-skill help-claude help-cursor help-common
+.PHONY: help-chezmoi help-keepassxc help-age help-add-skill help-claude help-cursor help-ssh help-common
 
 install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks install-add-skill install-claude setup-hooks ensure-path bootstrap-chezmoi-config
 
-help: help-chezmoi help-add-skill help-claude help-cursor help-age help-keepassxc help-common
+help: help-chezmoi help-add-skill help-claude help-cursor help-ssh help-age help-keepassxc help-common

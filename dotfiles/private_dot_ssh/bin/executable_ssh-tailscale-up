@@ -1,0 +1,22 @@
+#!/bin/bash
+# Exit 0 if Tailscale has a usable 100.x IPv4. Cached ~5s to speed repeated Match exec.
+_cache="${TMPDIR:-/tmp}/.ssh-ts.${UID}"
+_now=$(date +%s)
+if [[ -f $_cache ]]; then
+	_mt=$(head -1 "$_cache" 2>/dev/null)
+	_ok=$(sed -n '2p' "$_cache" 2>/dev/null)
+	if [[ -n $_mt && $((_now - _mt)) -lt 5 ]]; then
+		[[ $_ok == 1 ]] && exit 0
+		exit 1
+	fi
+fi
+command -v tailscale >/dev/null 2>&1 || { echo "$_now" >"$_cache"; echo 0 >>"$_cache"; exit 1; }
+_ip=$(tailscale ip -4 2>/dev/null | head -1)
+if [[ -n $_ip && $_ip == 100.* ]]; then
+	echo "$_now" >"$_cache"
+	echo 1 >>"$_cache"
+	exit 0
+fi
+echo "$_now" >"$_cache"
+echo 0 >>"$_cache"
+exit 1

@@ -1,0 +1,46 @@
+#!/bin/bash
+# home | idea | ts | cloud. Cached ~5s. Prefers fast iface checks on Darwin.
+_cache="${TMPDIR:-/tmp}/.ssh-env.${UID}"
+_now=$(date +%s)
+if [[ -f $_cache ]]; then
+	_mt=$(head -1 "$_cache" 2>/dev/null)
+	_ev=$(sed -n '2p' "$_cache" 2>/dev/null)
+	if [[ -n $_mt && $((_now - _mt)) -lt 5 && -n $_ev ]]; then
+		echo "$_ev"
+		exit 0
+	fi
+fi
+_env=cloud
+case "$(uname -s)" in
+Darwin)
+	for _i in en0 en1 en2 en3 en4 en5 en6 en7; do
+		_a=$(ipconfig getifaddr "$_i" 2>/dev/null) || continue
+		case "$_a" in
+		192.168.122.*) _env=home; break ;;
+		192.168.3.*) _env=idea; break ;;
+		esac
+	done
+	;;
+Linux)
+	_ipout=$(ip -4 -o addr show scope global 2>/dev/null)
+	if echo "$_ipout" | grep -qE 'inet 192\.168\.122\.'; then
+		_env=home
+	elif echo "$_ipout" | grep -qE 'inet 192\.168\.3\.'; then
+		_env=idea
+	fi
+	;;
+*)
+	if ifconfig 2>/dev/null | grep -q 'inet 192\.168\.122\.'; then
+		_env=home
+	elif ifconfig 2>/dev/null | grep -q 'inet 192\.168\.3\.'; then
+		_env=idea
+	fi
+	;;
+esac
+if [[ $_env == cloud ]]; then
+	_ip=$(tailscale ip -4 2>/dev/null | head -1)
+	[[ -n $_ip && $_ip == 100.* ]] && _env=ts
+fi
+echo "$_now" >"$_cache"
+echo "$_env" >>"$_cache"
+echo "$_env"
