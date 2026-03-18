@@ -164,6 +164,49 @@ sync_changes() {
   echo ""
 }
 
+handle_deletion() {
+  local deleted_file="$1"
+
+  if ! should_sync; then
+    log_info "Debouncing sync (too soon after last sync)"
+    return
+  fi
+
+  log_info "Deletion detected: $deleted_file"
+
+  if [[ "$deleted_file" =~ /.ssh/ ]]; then
+    log_info "Running SSH sync (will clean stale source files)..."
+    local sync_script="$SCRIPT_DIR/sync-ssh-config.sh"
+    if [ -f "$sync_script" ] && [ -x "$sync_script" ]; then
+      if bash "$sync_script" > /tmp/chezmoi-watch-sync.log 2>&1; then
+        log_success "SSH sync completed (stale files cleaned)"
+      else
+        log_error "SSH sync failed"
+        tail -5 /tmp/chezmoi-watch-sync.log | while read line; do
+          log_error "  $line"
+        done
+      fi
+    fi
+  else
+    local rel_path="${deleted_file#$HOME/}"
+    if chezmoi managed -i files 2>/dev/null | grep -qF "$rel_path"; then
+      log_info "Removing $rel_path from chezmoi..."
+      if chezmoi forget "$rel_path" > /tmp/chezmoi-watch-sync.log 2>&1; then
+        log_success "File removed from chezmoi"
+      else
+        log_error "Failed to remove file from chezmoi"
+        tail -5 /tmp/chezmoi-watch-sync.log | while read line; do
+          log_error "  $line"
+        done
+      fi
+    else
+      log_info "File not managed by chezmoi, skipping"
+    fi
+  fi
+
+  echo ""
+}
+
 start_watching() {
   local watch_dirs=$(get_watch_dirs)
   local dir_count=$(echo "$watch_dirs" | wc -l | tr -d ' ')
@@ -194,12 +237,16 @@ start_watching() {
   
   # Execute fswatch and process changes
   eval "$fswatch_cmd" 2>/dev/null | while read file; do
-    # Skip if file doesn't exist or is in .git directory
-    if [ ! -e "$file" ] || [[ "$file" =~ /.git/ ]]; then
+    # Skip .git directory
+    if [[ "$file" =~ /.git/ ]]; then
       continue
     fi
-    
-    sync_changes "$file"
+
+    if [ -e "$file" ]; then
+      sync_changes "$file"
+    else
+      handle_deletion "$file"
+    fi
   done
 }
 

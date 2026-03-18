@@ -57,11 +57,43 @@ sync_sconf_files() {
   
   if [ $count -eq 0 ]; then
     echo "  No .sconf files found"
-    return 1
   fi
   
   echo "  Total: $count file(s) synced"
+  
+  clean_stale_sconf_files "$config_d_dir"
+  
   return 0
+}
+
+clean_stale_sconf_files() {
+  local config_d_dir="$1"
+  local source_dir="$TEMPLATE_DIR/config.d"
+  
+  if [ ! -d "$source_dir" ]; then
+    return 0
+  fi
+  
+  local removed=0
+  for source_file in "$source_dir"/encrypted_*.sconf.age; do
+    if [ ! -f "$source_file" ]; then
+      continue
+    fi
+    local basename=$(basename "$source_file")
+    # encrypted_personal.sconf.age -> personal.sconf
+    local target_name="${basename#encrypted_}"
+    target_name="${target_name%.age}"
+    
+    if [ ! -f "$config_d_dir/$target_name" ]; then
+      echo "  Removing stale source: $basename"
+      rm -f "$source_file"
+      removed=$((removed + 1))
+    fi
+  done
+  
+  if [ $removed -gt 0 ]; then
+    echo "  Cleaned: $removed stale file(s)"
+  fi
 }
 
 sync_bin_scripts() {

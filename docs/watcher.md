@@ -36,6 +36,13 @@ make install-chezmoi-watcher
 | Cursor 配置 | `sync-cursor-config.sh` | 保留模板占位符 |
 | 其他文件 | `chezmoi add` | 通用处理 |
 
+## 文件删除处理
+
+删除本地文件时，服务会自动清理 chezmoi 源中对应的文件：
+
+- **SSH 文件** -- 触发 `sync-ssh-config.sh`，自动检测并移除源目录中不再存在的 `.sconf.age` 文件
+- **其他文件** -- 通过 `chezmoi forget` 从 chezmoi 管理中移除
+
 ## 防抖机制
 
 为避免频繁编辑触发多次同步，服务实现了 3 秒防抖间隔。检测到变化后立即同步，3 秒内的后续变化会被忽略。编辑器临时文件（`~`、`.swp`、`.tmp`）被自动过滤。
@@ -65,18 +72,22 @@ journalctl --user -u chezmoi-watcher -f
 
 ```mermaid
 flowchart LR
-    edit[Edit file] --> fswatch[fswatch detects change]
-    fswatch --> debounce{Debounce 3s}
-    debounce -->|Too soon| skip[Skip]
+    fswatch[fswatch detects change] --> exists{File exists?}
+    exists -->|Yes| debounce{Debounce 3s}
+    exists -->|No| delDebounce{Debounce 3s}
     debounce -->|Ready| route{Route by path}
     route -->|~/.ssh/| sshSync[sync-ssh-config.sh]
     route -->|~/.claude/| claudeSync[sync-claude-config.sh]
     route -->|Cursor| cursorSync[sync-cursor-config.sh]
     route -->|Other| chezmoiAdd["chezmoi add"]
-    sshSync --> done[Updated in repo]
+    delDebounce -->|Ready| delRoute{Route by path}
+    delRoute -->|~/.ssh/| sshSync
+    delRoute -->|Other| chezmoiForget["chezmoi forget"]
+    sshSync --> done[Repo updated]
     claudeSync --> done
     cursorSync --> done
     chezmoiAdd --> done
+    chezmoiForget --> done
 ```
 
 ## 故障排查
