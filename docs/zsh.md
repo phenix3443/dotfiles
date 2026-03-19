@@ -11,14 +11,16 @@
 
 ### conf.d files (loaded in alphabetical order)
 
-| File | Purpose |
-|------|---------|
-| `00-compinit.zsh` | fpath setup and compinit initialization |
-| `05-zsh-syntax-highlighting.zsh` | Load zsh-syntax-highlighting plugin (requires Homebrew) |
-| `06-zsh-autosuggestions.zsh` | Load zsh-autosuggestions plugin (requires Homebrew) |
-| `10-asdf-path.zsh` | asdf version manager path setup |
-| `20-local-bin-path.zsh` | ~/.local/bin path setup |
-| `claude.zsh` | Claude Code API credentials (generated from claude.zsh.tmpl) |
+**数字前缀控制加载顺序**，确保依赖关系正确：
+
+| File | Purpose | Why this order? |
+|------|---------|-----------------|
+| `00-compinit.zsh` | fpath setup and compinit initialization | 必须最先：其他插件依赖补全系统 |
+| `06-zsh-autosuggestions.zsh` | Load zsh-autosuggestions plugin (requires Homebrew) | compinit 之后 |
+| `10-asdf-path.zsh` | asdf version manager fpath and PATH setup | 在插件之后设置环境变量 |
+| `20-local-bin-path.zsh` | ~/.local/bin path setup | 最后修改 PATH |
+| `99-zsh-syntax-highlighting.zsh` | Load zsh-syntax-highlighting plugin (requires Homebrew) | **必须最后**：官方要求在所有插件之后加载 |
+| `claude.zsh` | Claude Code API credentials (generated from claude.zsh.tmpl) | 无依赖，字母顺序在数字之后 |
 
 ## Claude env (`claude.zsh`)
 
