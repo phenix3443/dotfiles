@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Sync ~/.zshrc and ~/.config/zsh/conf.d/*.zsh into chezmoi source.
 # Skips claude.zsh (generated from claude.zsh.tmpl + KeePassXC; do not copy plaintext token).
+# Note: apply-zsh runs ensure-zsh-plugins.sh first to ensure Homebrew and plugins are installed.
 
 set -e
 
