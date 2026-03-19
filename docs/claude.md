@@ -6,7 +6,7 @@
 - **`skills_manifest.txt`**：用户级 skills 清单
 - **`mcp_servers.json`**：与 `~/.claude.json` 中 `mcpServers` 同结构；由 chezmoi 写到 `~/.claude/mcp_servers.json`，apply 后 **`run_after_15-merge-claude-mcp.sh`** 只更新 `~/.claude.json` 的 `mcpServers`，其余键不动
 
-**API 网关（`ANTHROPIC_BASE_URL`）与 token**：只在 **KeePassXC 条目「Claude Code」**（URL + Password）维护一处；终端里由 [claude.zsh.tmpl](../dotfiles/dot_config/zsh/conf.d/claude.zsh.tmpl) 生成 `claude.zsh`。详见 [zsh.md](zsh.md)。
+**API 网关（`ANTHROPIC_BASE_URL`）与 token**：只在 **KeePassXC 条目「Claude Code」**（URL + Password）维护一处；终端里由 [30-claude.zsh.tmpl](../dotfiles/dot_config/zsh/conf.d/30-claude.zsh.tmpl) 生成 `30-claude.zsh`。详见 [zsh.md](zsh.md)。
 
 若 **GUI 启动的 Claude Code** 读不到 zsh 环境，可在本机 **`~/.claude/settings.local.json`**（不进仓库）里按需写 `env`，不要写进仓库里的 `settings.json`。
 

@@ -46,7 +46,7 @@ for repo_f in "$DOTFILES/dot_config/zsh/conf.d"/*.zsh; do
 done
 if [ "$zsh_any" -eq 0 ]; then
   echo "  （上述明文与仓库一致，或无可比文件）"
-  echo "  （未对比：claude.zsh，由 KeePass + claude.zsh.tmpl 生成）"
+  echo "  （未对比：30-claude.zsh，由 KeePass + 30-claude.zsh.tmpl 生成）"
 fi
 echo ""
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sync ~/.zshrc and ~/.config/zsh/conf.d/*.zsh into chezmoi source.
-# Skips claude.zsh (generated from claude.zsh.tmpl + KeePassXC; do not copy plaintext token).
+# Skips 30-claude.zsh (generated from 30-claude.zsh.tmpl + KeePassXC; do not copy plaintext token).
 # Note: apply-zsh runs ensure-zsh-plugins.sh first to ensure Homebrew and plugins are installed.
 
 set -e
@@ -36,8 +36,8 @@ for f in "$CONFD_LOCAL"/*.zsh; do
   [ -f "$f" ] || continue
   base=$(basename "$f")
   case "$base" in
-    claude.zsh)
-      echo "skip $base (managed by claude.zsh.tmpl + KeePassXC)"
+    30-claude.zsh)
+      echo "skip $base (managed by 30-claude.zsh.tmpl + KeePassXC)"
       skipped=$((skipped + 1))
       continue
       ;;
