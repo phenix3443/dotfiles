@@ -8,21 +8,29 @@
 - **目标文件（本机）**：`~/.kube/config`（`chezmoi apply` 时自动解密生成，权限 600）
 - **密钥**：使用 `~/.config/chezmoi/age.txt` 中的 age 私钥解密，与 `dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl` 中配置的 identity 一致。
 
+## 命令
+
+| 命令 | 说明 |
+|------|------|
+| `make apply-kube` | 仅应用 ~/.kube/config（从 age 解密） |
+| `make sync-kube` | 加密 ~/.kube/config 到仓库 |
+| `make encrypt-kubeconfig` | （sync-kube 的别名，向后兼容） |
+
 ## 更新流程
 
 修改本机 `~/.kube/config` 后，需要重新加密并写回仓库中的 `dotfiles/private_dot_kube/config.age`。
 
-1. 在仓库根目录执行脚本（脚本会从 `dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl` 读取 recipient 并加密）：
+1. 在仓库根目录执行（脚本会从 `dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl` 读取 recipient 并加密）：
 
    ```bash
-   make encrypt-kubeconfig
+   make sync-kube
    ```
 
-   或直接运行：`./scripts/encrypt-kubeconfig.sh`
+   或使用旧命令：`make encrypt-kubeconfig`
 
 2. 提交并推送（可选）：`git add dotfiles/private_dot_kube/config.age && git commit -m "Update kubeconfig" && git push`
 
-3. 在其他机器上拉取后执行 `chezmoi apply`，即可得到最新的 `~/.kube/config`。
+3. 在其他机器上拉取后执行 `chezmoi apply` 或 `make apply-kube`，即可得到最新的 `~/.kube/config`。
 
 ## 注意
 

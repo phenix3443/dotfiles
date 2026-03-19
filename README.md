@@ -56,7 +56,6 @@ chezmoi apply                  # 应用所有配置（需输入 KeePassXC 数据
 | `make install` | 安装所有依赖并配置 hooks |
 | `make setup-age-keys` | 生成 age 密钥对 |
 | `make bootstrap-chezmoi-config` | 新机器上引导 chezmoi 配置 |
-| `make encrypt-kubeconfig` | 加密 kubeconfig |
 
 ### 配置应用与同步
 
@@ -67,12 +66,14 @@ chezmoi apply                  # 应用所有配置（需输入 KeePassXC 数据
 | `make apply-ssh` | 仅应用 SSH 配置 |
 | `make apply-claude` | 仅应用 Claude 配置（普通 settings.json） |
 | `make apply-zsh` | 仅应用 ~/.zshrc 与 ~/.config/zsh |
-| `make sync-zsh` | 本机 zsh / conf.d 写回仓库（跳过 30-claude.zsh） |
-| `make check-sync` | 中文提示：哪些配置与仓库不一致；未覆盖项见脚本末尾说明 |
 | `make apply-cursor` | 仅应用 Cursor 配置 |
+| `make apply-kube` | 仅应用 ~/.kube/config（从 age 解密） |
 | `make sync-ssh` | 同步本地 SSH 配置到仓库 |
 | `make sync-claude` | 本机 Claude 配置原样写回仓库（提交前勿含密钥） |
+| `make sync-zsh` | 本机 zsh / conf.d 写回仓库（跳过 30-claude.zsh） |
 | `make sync-cursor` | 同步本地 Cursor 配置到仓库 |
+| `make sync-kube` | 加密 ~/.kube/config 到仓库 |
+| `make check-sync` | 中文提示：哪些配置与仓库不一致；未覆盖项见脚本末尾说明 |
 
 ### KeePassXC 管理
 
