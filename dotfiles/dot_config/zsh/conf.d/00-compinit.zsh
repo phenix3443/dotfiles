@@ -1,2 +1,2 @@
-fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions ~/.zfunc $fpath)
+fpath=(~/.zfunc $fpath)
 autoload -U compinit && compinit
