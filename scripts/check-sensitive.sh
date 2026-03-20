@@ -67,7 +67,7 @@ check_file() {
 }
 
 if [ $# -eq 0 ]; then
-  printf "${YELLOW}No files to check${NC}\n" >&2
+  printf "%sNo files to check%s\n" "${YELLOW}" "${NC}" >&2
   exit 0
 fi
 

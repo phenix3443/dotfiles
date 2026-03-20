@@ -38,7 +38,7 @@ echo ""
 
 zsh_any=0
 echo "--- Zsh ---"
-if diff_plain "~/.zshrc" "make sync-zsh" "$HOME/.zshrc" "$DOTFILES/dot_zshrc"; then zsh_any=1; fi
+if diff_plain "$HOME/.zshrc" "make sync-zsh" "$HOME/.zshrc" "$DOTFILES/dot_zshrc"; then zsh_any=1; fi
 shopt -s nullglob
 for repo_f in "$DOTFILES/dot_config/zsh/conf.d"/*.zsh; do
   base=$(basename "$repo_f")

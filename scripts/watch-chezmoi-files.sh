@@ -5,7 +5,6 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Colors for output
 RED='\033[0;31m'
@@ -52,15 +51,24 @@ get_managed_files() {
 
 # Get list of directories to watch
 get_watch_dirs() {
-  local managed_files=$(get_managed_files)
+  local managed_files
+  managed_files=$(get_managed_files)
   local watch_dirs=()
   
   # Extract unique directories from managed files
   while IFS= read -r file; do
     if [ -n "$file" ] && [ -e "$HOME/$file" ]; then
-      local dir=$(dirname "$HOME/$file")
+      local dir
+      dir=$(dirname "$HOME/$file")
       # Add to array if not already present
-      if [[ ! " ${watch_dirs[@]} " =~ " ${dir} " ]]; then
+      local found=0
+      for existing_dir in "${watch_dirs[@]}"; do
+        if [ "$existing_dir" = "$dir" ]; then
+          found=1
+          break
+        fi
+      done
+      if [ "$found" -eq 0 ]; then
         watch_dirs+=("$dir")
       fi
     fi
@@ -84,7 +92,8 @@ LAST_SYNC=0
 DEBOUNCE_SECONDS=3
 
 should_sync() {
-  local now=$(date +%s)
+  local now
+  now=$(date +%s)
   local elapsed=$((now - LAST_SYNC))
   
   if [ $elapsed -ge $DEBOUNCE_SECONDS ]; then
@@ -129,7 +138,7 @@ sync_changes() {
       log_success "File added to chezmoi"
     else
       log_error "Failed to add file to chezmoi"
-      tail -5 /tmp/chezmoi-watch-sync.log | while read line; do
+      tail -5 /tmp/chezmoi-watch-sync.log | while read -r line; do
         log_error "  $line"
       done
     fi
@@ -145,13 +154,13 @@ sync_changes() {
       
       # Show summary from sync output
       if grep -q "Success:" /tmp/chezmoi-watch-sync.log; then
-        grep "Success:\|Failed:" /tmp/chezmoi-watch-sync.log | while read line; do
+        grep "Success:\|Failed:" /tmp/chezmoi-watch-sync.log | while read -r line; do
           log_info "  $line"
         done
       fi
     else
       log_error "Sync failed! Check /tmp/chezmoi-watch-sync.log for details"
-      tail -5 /tmp/chezmoi-watch-sync.log | while read line; do
+      tail -5 /tmp/chezmoi-watch-sync.log | while read -r line; do
         log_error "  $line"
       done
     fi
@@ -185,20 +194,20 @@ handle_deletion() {
         log_success "SSH sync completed (stale files cleaned)"
       else
         log_error "SSH sync failed"
-        tail -5 /tmp/chezmoi-watch-sync.log | while read line; do
+        tail -5 /tmp/chezmoi-watch-sync.log | while read -r line; do
           log_error "  $line"
         done
       fi
     fi
   else
-    local rel_path="${deleted_file#$HOME/}"
+    local rel_path="${deleted_file#"$HOME"/}"
     if chezmoi managed -i files 2>/dev/null | grep -qF "$rel_path"; then
       log_info "Removing $rel_path from chezmoi..."
       if chezmoi forget "$rel_path" > /tmp/chezmoi-watch-sync.log 2>&1; then
         log_success "File removed from chezmoi"
       else
         log_error "Failed to remove file from chezmoi"
-        tail -5 /tmp/chezmoi-watch-sync.log | while read line; do
+        tail -5 /tmp/chezmoi-watch-sync.log | while read -r line; do
           log_error "  $line"
         done
       fi
@@ -211,8 +220,10 @@ handle_deletion() {
 }
 
 start_watching() {
-  local watch_dirs=$(get_watch_dirs)
-  local dir_count=$(echo "$watch_dirs" | wc -l | tr -d ' ')
+  local watch_dirs
+  watch_dirs=$(get_watch_dirs)
+  local dir_count
+  dir_count=$(echo "$watch_dirs" | wc -l | tr -d ' ')
   
   log_info "Starting chezmoi file watcher..."
   log_info "Watching $dir_count directories:"
@@ -239,7 +250,7 @@ start_watching() {
   done <<< "$watch_dirs"
   
   # Execute fswatch and process changes
-  eval "$fswatch_cmd" 2>/dev/null | while read file; do
+  eval "$fswatch_cmd" 2>/dev/null | while read -r file; do
     # Skip .git directory
     if [[ "$file" =~ /.git/ ]]; then
       continue

@@ -7,3 +7,10 @@ pre-commit:
       skip:
         - merge
         - rebase
+    shellcheck:
+      glob: "scripts/*.sh"
+      run: shellcheck {staged_files}
+      stage_fixed: false
+      skip:
+        - merge
+        - rebase

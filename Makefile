@@ -12,7 +12,7 @@ include make/chezmoi.mk make/keepassxc.mk make/age.mk make/lefthook.mk make/gitl
 .PHONY: install help
 .PHONY: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks install-add-skill install-claude install-zsh-plugins
 .PHONY: keepassxc-entry bootstrap-chezmoi-config encrypt-kubeconfig add show edit rm ls search apply-cursor apply-claude apply-zsh sync-zsh apply-kube sync-kube check-sync sync-ssh apply-ssh watch-ssh install-ssh-watcher uninstall-ssh-watcher status-ssh-watcher logs-ssh-watcher watch-chezmoi install-chezmoi-watcher uninstall-chezmoi-watcher status-chezmoi-watcher logs-chezmoi-watcher
-.PHONY: setup-hooks setup-age-keys ensure-path test
+.PHONY: setup-hooks setup-age-keys ensure-path test shellcheck lint
 .PHONY: help-chezmoi help-keepassxc help-age help-add-skill help-claude help-cursor help-zsh help-ssh help-kube help-watcher help-common
 
 install: install-chezmoi install-keepassxc-cli install-age install-lefthook install-gitleaks install-add-skill install-claude install-zsh-plugins setup-hooks ensure-path bootstrap-chezmoi-config

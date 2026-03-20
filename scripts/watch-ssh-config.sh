@@ -63,7 +63,8 @@ LAST_SYNC=0
 DEBOUNCE_SECONDS=3
 
 should_sync() {
-  local now=$(date +%s)
+  local now
+  now=$(date +%s)
   local elapsed=$((now - LAST_SYNC))
   
   if [ $elapsed -ge $DEBOUNCE_SECONDS ]; then
@@ -90,13 +91,13 @@ sync_changes() {
     
     # Show summary from sync output
     if grep -q "Success:" /tmp/ssh-watch-sync.log; then
-      grep "Success:\|Failed:" /tmp/ssh-watch-sync.log | while read line; do
+      grep "Success:\|Failed:" /tmp/ssh-watch-sync.log | while read -r line; do
         log_info "  $line"
       done
     fi
   else
     log_error "Sync failed! Check /tmp/ssh-watch-sync.log for details"
-    tail -5 /tmp/ssh-watch-sync.log | while read line; do
+    tail -5 /tmp/ssh-watch-sync.log | while read -r line; do
       log_error "  $line"
     done
   fi
@@ -132,7 +133,7 @@ start_watching() {
     -l 0.5 \
     "$SSH_DIR/config" \
     "$SSH_DIR/config.d" \
-    "$SSH_DIR/bin" 2>/dev/null | while read file; do
+    "$SSH_DIR/bin" 2>/dev/null | while read -r file; do
     sync_changes "$file"
   done
 }

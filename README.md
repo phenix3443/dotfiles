@@ -74,6 +74,7 @@ chezmoi apply                  # 应用所有配置（需输入 KeePassXC 数据
 | `make sync-cursor` | 同步本地 Cursor 配置到仓库 |
 | `make sync-kube` | 加密 ~/.kube/config 到仓库 |
 | `make check-sync` | 中文提示：哪些配置与仓库不一致；未覆盖项见脚本末尾说明 |
+| `make shellcheck` / `make lint` | 运行 shellcheck 检查所有脚本（与 CI 一致） |
 
 ### KeePassXC 管理
 

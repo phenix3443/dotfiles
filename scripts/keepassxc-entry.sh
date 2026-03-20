@@ -16,7 +16,8 @@ DEFAULT_DB="${KEEPASSXC_DB:-$HOME/.config/keepassxc/chezmoi.kdbx}"
 expand_tilde() {
   case "$1" in
     "~")   echo "$HOME" ;;
-    "~/"*) echo "$HOME/${1#"~/"}" ;;
+    "$HOME/"*) echo "$1" ;;
+    ~/*) echo "$HOME/${1#\~/}" ;;
     *)     echo "$1" ;;
   esac
 }

@@ -79,7 +79,8 @@ clean_stale_sconf_files() {
     if [ ! -f "$source_file" ]; then
       continue
     fi
-    local basename=$(basename "$source_file")
+    local basename
+    basename=$(basename "$source_file")
     # encrypted_personal.sconf.age -> personal.sconf
     local target_name="${basename#encrypted_}"
     target_name="${target_name%.age}"
