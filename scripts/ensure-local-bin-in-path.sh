@@ -32,6 +32,7 @@ already_has_path() {
   return 1
 }
 
+# shellcheck disable=SC2016
 LINE='export PATH="$HOME/.local/bin:$PATH"'
 
 if already_has_path; then
@@ -39,8 +40,10 @@ if already_has_path; then
   exit 0
 fi
 
-echo "" >> "$RC"
-echo "# added by chezmoi make install: ensure gitleaks etc. are in PATH" >> "$RC"
-echo "$LINE" >> "$RC"
+{
+  echo ""
+  echo "# added by chezmoi make install: ensure gitleaks etc. are in PATH"
+  echo "$LINE"
+} >> "$RC"
 echo "Added to $RC: $LINE"
 echo "Run: source $RC  (or open a new terminal)"
