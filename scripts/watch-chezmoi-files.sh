@@ -44,6 +44,13 @@ check_chezmoi() {
   fi
 }
 
+# True if path is $HOME/.cursor or a path under it (not e.g. $HOME/.cursor-backup).
+path_is_under_home_dot_cursor() {
+  local p="$1"
+  local base="$HOME/.cursor"
+  [[ "$p" == "$base" || "$p" == "$base/"* ]]
+}
+
 # Get list of files managed by chezmoi
 get_managed_files() {
   chezmoi managed -i files 2>/dev/null || true
@@ -60,6 +67,9 @@ get_watch_dirs() {
     if [ -n "$file" ] && [ -e "$HOME/$file" ]; then
       local dir
       dir=$(dirname "$HOME/$file")
+      if path_is_under_home_dot_cursor "$dir"; then
+        continue
+      fi
       # Add to array if not already present
       local found=0
       for existing_dir in "${watch_dirs[@]}"; do
@@ -107,7 +117,12 @@ should_sync() {
 # Sync changes to chezmoi
 sync_changes() {
   local changed_file="$1"
-  
+
+  if path_is_under_home_dot_cursor "$changed_file"; then
+    log_info "Skipping ~/.cursor (IDE runtime data is not synced)"
+    return
+  fi
+
   if ! should_sync; then
     log_info "Debouncing sync (too soon after last sync)"
     return
@@ -178,6 +193,11 @@ sync_changes() {
 
 handle_deletion() {
   local deleted_file="$1"
+
+  if path_is_under_home_dot_cursor "$deleted_file"; then
+    log_info "Skipping deletion under ~/.cursor"
+    return
+  fi
 
   if ! should_sync; then
     log_info "Debouncing sync (too soon after last sync)"
