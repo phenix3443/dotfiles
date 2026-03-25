@@ -1,5 +1,14 @@
 {
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "code-switch-r",
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:18100"
+  },
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
       "Localhost",
       "127.0.0.1",
@@ -46,6 +55,11 @@
       "Bash(pytest *)",
       "Bash(uname -a)"
     ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(git clean *)",
+      "Bash(shred *)"
+    ],
     "deny": [
       "Bash(rm -rf *)",
       "Bash(rm -rf /*)",
@@ -55,8 +69,5 @@
       "Bash(wget * | sh)",
       "Bash(wget * | bash)"
     ]
-  },
-  "enabledPlugins": {
-    "superpowers@claude-plugins-official": true
   }
 }
