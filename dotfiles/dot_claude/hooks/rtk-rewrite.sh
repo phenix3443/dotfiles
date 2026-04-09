@@ -37,7 +37,14 @@ if [ -n "$RTK_VERSION" ]; then
 fi
 
 INPUT=$(cat)
-CMD=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
+if [ -z "$INPUT" ]; then
+  exit 0
+fi
+if ! echo "$INPUT" | jq -e . >/dev/null 2>&1; then
+  exit 0
+fi
+
+CMD=$(echo "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null) || exit 0
 
 if [ -z "$CMD" ]; then
   exit 0
@@ -70,29 +77,38 @@ case $EXIT_CODE in
     ;;
 esac
 
-ORIGINAL_INPUT=$(echo "$INPUT" | jq -c '.tool_input')
-UPDATED_INPUT=$(echo "$ORIGINAL_INPUT" | jq --arg cmd "$REWRITTEN" '.command = $cmd')
-
-if [ "$EXIT_CODE" -eq 3 ]; then
-  # Ask: rewrite the command, omit permissionDecision so Claude Code prompts.
-  jq -n \
-    --argjson updated "$UPDATED_INPUT" \
-    '{
-      "hookSpecificOutput": {
-        "hookEventName": "PreToolUse",
-        "updatedInput": $updated
-      }
-    }'
-else
-  # Allow: rewrite the command and auto-allow.
-  jq -n \
-    --argjson updated "$UPDATED_INPUT" \
-    '{
-      "hookSpecificOutput": {
-        "hookEventName": "PreToolUse",
-        "permissionDecision": "allow",
-        "permissionDecisionReason": "RTK auto-rewrite",
-        "updatedInput": $updated
-      }
-    }'
+ORIGINAL_INPUT=$(echo "$INPUT" | jq -c '.tool_input // empty' 2>/dev/null) || exit 0
+if [ -z "$ORIGINAL_INPUT" ] || [ "$ORIGINAL_INPUT" = "null" ]; then
+  exit 0
 fi
+UPDATED_INPUT=$(echo "$ORIGINAL_INPUT" | jq --arg cmd "$REWRITTEN" '.command = $cmd' 2>/dev/null) || exit 0
+
+emit_pre() {
+  if [ "$EXIT_CODE" -eq 3 ]; then
+    jq -n \
+      --argjson updated "$UPDATED_INPUT" \
+      '{
+        "hookSpecificOutput": {
+          "hookEventName": "PreToolUse",
+          "updatedInput": $updated
+        }
+      }' 2>/dev/null
+  else
+    jq -n \
+      --argjson updated "$UPDATED_INPUT" \
+      '{
+        "hookSpecificOutput": {
+          "hookEventName": "PreToolUse",
+          "permissionDecision": "allow",
+          "permissionDecisionReason": "RTK auto-rewrite",
+          "updatedInput": $updated
+        }
+      }' 2>/dev/null
+  fi
+}
+
+OUT=$(emit_pre) || true
+if [ -n "$OUT" ]; then
+  printf '%s\n' "$OUT"
+fi
+exit 0
