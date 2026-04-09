@@ -1,35 +1,53 @@
 # Claude Code 配置管理
 
-本仓库在 **`dotfiles/dot_claude/`** 里用**普通文件**管理 Claude Code 配置（无模板、无 age 加密）。
+本仓库在 **`dotfiles/dot_claude/`** 管理 Claude Code 配置。
 
-- **`settings.json`**：权限、插件等（**不在此文件配置 API 网关**；可提交）
-- **`skills_manifest.txt`**：用户级 skills 清单
-- **`mcp_servers.json`**：与 `~/.claude.json` 中 `mcpServers` 同结构；由 chezmoi 写到 `~/.claude/mcp_servers.json`，apply 后 **`run_after_15-merge-claude-mcp.sh`** 只更新 `~/.claude.json` 的 `mcpServers`，其余键不动
+## 管理的文件
 
-**API 网关（`ANTHROPIC_BASE_URL`）与 token**：只在 **KeePassXC 条目「Claude Code」**（URL + Password）维护一处；终端里由 [30-claude.zsh.tmpl](../dotfiles/dot_config/zsh/conf.d/30-claude.zsh.tmpl) 生成 `30-claude.zsh`。详见 [zsh.md](zsh.md)。
+| 文件 | 说明 |
+| ---- | ---- |
+| `settings.json.tmpl` | 权限、hooks、插件（chezmoi 模板；hook 路径用 `{{ .chezmoi.homeDir }}`）|
+| `CLAUDE.md` | 全局 AI 行为规则 |
+| `RTK.md` | RTK 用法说明（被 `CLAUDE.md` 通过 `@RTK.md` 引用）|
+| `hooks/` | PreToolUse / PostToolUse 脚本（`rtk-rewrite.sh`、`fix-to-code-reminder.sh`）|
+| `skills_manifest.txt` | 用户级 skills 清单 |
+| `mcp_servers.json` | 与 `~/.claude.json` 中 `mcpServers` 同结构；apply 后 `run_after_15-merge-claude-mcp.sh` 合并到 `~/.claude.json` |
+| `settings/mcp.json` | Claude Code 的 `~/.claude/settings/mcp.json` |
 
-若 **GUI 启动的 Claude Code** 读不到 zsh 环境，可在本机 **`~/.claude/settings.local.json`**（不进仓库）里按需写 `env`，不要写进仓库里的 `settings.json`。
+## 不进仓库的文件
 
-不要在仓库的 `settings.json` 里写 Key；若本机 `~/.claude/settings.json` 里误写了 Key，`make sync-claude` 会把整文件拷回仓库，**提交前请检查 diff**。
+- **`env` 块**（`ANTHROPIC_BASE_URL`、`ANTHROPIC_AUTH_TOKEN` 等）：`sync-claude` 会自动从 `settings.json` 中剥离 `env`。本机如需覆盖环境变量，写入 **`~/.claude/settings.local.json`**
+- **API 网关与 token**：只在 **KeePassXC 条目「Claude Code」** 维护；终端里由 [30-claude.zsh.tmpl](../dotfiles/dot_config/zsh/conf.d/30-claude.zsh.tmpl) 生成 `30-claude.zsh`。详见 [zsh.md](zsh.md)
+- **`mcp_servers.json` 安全**：可能含 token。**提交前审阅 diff**；优先用环境变量补全密钥
 
-**MCP 与安全**：`mcp_servers.json` 可能含 `env` / `headers` 中的 token。**提交前审阅 diff**，避免把密钥推进 git；优先用环境变量或由本机私有配置补全。若在 Claude UI 里新增/改了 MCP，需先 **`make sync-claude`** 再提交，否则下次 **`chezmoi apply` 会用仓库里的列表覆盖本机 `mcpServers`**。
+## RTK（Rust Token Killer）
+
+RTK 是一个 CLI 代理，对常见开发命令的 LLM token 消耗减少 60-90%。
+
+- **安装**：`make install-rtk`（brew / install.sh / cargo）
+- **chezmoi apply** 时：`run_after_05-install-rtk.sh` 会自动安装 rtk 二进制
+- hooks 和 `RTK.md` 由 chezmoi 直接管理，无需额外 `rtk init -g`
 
 ## 命令
 
 | 命令 | 说明 |
 | ---- | ---- |
-| `make apply-claude` | `chezmoi apply ~/.claude`，把仓库里的 `settings.json` 等写到本机 |
-| `make sync-claude` | 拷回 `settings.json`、`skills_manifest.txt`；若存在 `~/.claude.json` 且已安装 `jq`，则把 `mcpServers` 写入 `mcp_servers.json` |
-| `make check-sync` | 会对比 `~/.claude.json` 的 `mcpServers` 与仓库 `mcp_servers.json`（需 `jq` 且上述文件存在） |
+| `make install-claude` | 安装 Claude Code CLI |
+| `make install-rtk` | 安装 RTK 二进制 |
+| `make sync-claude` | 拷回 settings（模板化）、skills、hooks、md、MCP 到仓库 |
+| `make apply-claude` | `chezmoi apply ~/.claude`，应用所有配置到本机 |
+| `make check-sync` | 对比 `~/.claude.json` 的 `mcpServers` 与仓库 `mcp_servers.json` |
 
 ## 修改流程
 
-1. 改仓库里的 `dotfiles/dot_claude/settings.json`（及可选 `mcp_servers.json`）→ `chezmoi apply` 或 `make apply-claude`
-2. 或在本机改 settings/skills/MCP 后 → `make sync-claude` → 审阅 diff → 提交（确认未包含密钥）
+1. 改仓库里的模板/配置 → `chezmoi apply` 或 `make apply-claude`
+2. 或在本机改 settings/hooks/skills/MCP 后 → `make sync-claude` → 审阅 diff → 提交
 
-## Skills
+## chezmoi apply 自动流程
 
-apply 结束后 `run_after_10-install-claude-skills.sh` 会按 `skills_manifest.txt` 安装 skills。需已安装 `add-skill` 或可用 `npx`。随后 `run_after_15-merge-claude-mcp.sh` 将 `mcp_servers.json` 合并进 `~/.claude.json`（依赖 `jq`）。
+1. `run_after_05-install-rtk.sh` — 安装 RTK 二进制（若不存在）
+2. `run_after_10-install-claude-skills.sh` — 按 `skills_manifest.txt` 安装 skills
+3. `run_after_15-merge-claude-mcp.sh` — 将 `mcp_servers.json` 合并进 `~/.claude.json`
 
 ## 参考
 

@@ -95,7 +95,7 @@ make test                               # Run keepassxc-entry tests
 dotfiles/                       # chezmoi source state (via .chezmoiroot)
   .chezmoiscripts/              # run_before / run_after hooks
   .chezmoitemplates/            # shared templates (Cursor configs)
-  dot_claude/                   # Claude Code config
+  dot_claude/                   # Claude Code config (settings.json.tmpl, hooks/, CLAUDE.md, RTK.md)
   dot_zshrc                     # ~/.zshrc
   dot_config/                   # ~/.config (chezmoi, keepassxc, zsh/conf.d)
   private_dot_ssh/              # SSH configs (encrypted .sconf, scripts)
@@ -110,7 +110,8 @@ make/                           # modular Makefile components
 
 scripts/                        # installation and management scripts
   sync-ssh-config.sh            # SSH config sync (with encryption)
-  sync-claude-config.sh         # Claude config sync (plain JSON copy)
+  sync-claude-config.sh         # Claude config sync (settings template, hooks, md, MCP)
+  install-rtk.sh                # RTK (Rust Token Killer) installation
   sync-cursor-config.sh         # Cursor config sync (preserves templates)
   watch-chezmoi-files.sh        # Universal file watcher
   install-chezmoi-watcher.sh    # Universal watcher service installer
