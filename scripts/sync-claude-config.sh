@@ -60,16 +60,15 @@ sync_settings_json() {
   local tmp
   tmp=$(mktemp)
 
-  # Strip the "env" block (machine-specific; belongs in settings.local.json)
-  jq 'del(.env)' "$local_file" > "$tmp"
+  jq '.' "$local_file" > "$tmp"
 
-  # Replace $HOME with chezmoi template variable in hook command paths
+  # Replace $HOME with chezmoi template variable (hook paths and any env values using home)
   local home_escaped
   home_escaped=$(printf '%s' "$HOME" | sed 's/[\/&]/\\&/g')
   sed "s|${home_escaped}|{{ .chezmoi.homeDir }}|g" "$tmp" > "$repo_file"
 
   rm -f "$tmp"
-  echo "  Written to dotfiles/dot_claude/settings.json.tmpl (env stripped, paths templated)"
+  echo "  Written to dotfiles/dot_claude/settings.json.tmpl (full JSON, paths templated)"
   return 0
 }
 

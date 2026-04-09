@@ -6,7 +6,7 @@
 
 | 文件 | 说明 |
 | ---- | ---- |
-| `settings.json.tmpl` | 权限、hooks、插件（chezmoi 模板；hook 路径用 `{{ .chezmoi.homeDir }}`）|
+| `settings.json.tmpl` | `env`、权限、hooks、插件（chezmoi 模板；若路径含 `$HOME` 会写成 `{{ .chezmoi.homeDir }}`）|
 | `CLAUDE.md` | 全局 AI 行为规则 |
 | `RTK.md` | RTK 用法说明（被 `CLAUDE.md` 通过 `@RTK.md` 引用）|
 | `hooks/` | PreToolUse / PostToolUse 脚本（`rtk-rewrite.sh`、`fix-to-code-reminder.sh`）|
@@ -14,11 +14,11 @@
 | `mcp_servers.json` | 与 `~/.claude.json` 中 `mcpServers` 同结构；apply 后 `run_after_15-merge-claude-mcp.sh` 合并到 `~/.claude.json` |
 | `settings/mcp.json` | Claude Code 的 `~/.claude/settings/mcp.json` |
 
-## 不进仓库的文件
+## 敏感与覆盖
 
-- **`env` 块**（`ANTHROPIC_BASE_URL`、`ANTHROPIC_AUTH_TOKEN` 等）：`sync-claude` 会自动从 `settings.json` 中剥离 `env`。本机如需覆盖环境变量，写入 **`~/.claude/settings.local.json`**
-- **API 网关与 token**：只在 **KeePassXC 条目「Claude Code」** 维护；终端里由 [30-claude.zsh.tmpl](../dotfiles/dot_config/zsh/conf.d/30-claude.zsh.tmpl) 生成 `30-claude.zsh`。详见 [zsh.md](zsh.md)
-- **`mcp_servers.json` 安全**：可能含 token。**提交前审阅 diff**；优先用环境变量补全密钥
+- **`env` 与 `make sync-claude`**：`settings.json` 会**整份**写入 `settings.json.tmpl`（含 `env`）。**提交前审阅 diff**，勿把真实 API Key 推进公开仓库；需要机内覆盖时仍可用 **`~/.claude/settings.local.json`**
+- **终端环境**：亦可只在 **KeePassXC + zsh** 维护网关与 token，见 [zsh.md](zsh.md)
+- **`mcp_servers.json`**：可能含 token，**提交前审阅 diff**
 
 ## RTK（Rust Token Killer）
 
