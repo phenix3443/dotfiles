@@ -19,7 +19,7 @@ make install-chezmoi-watcher
 
 - `~/.ssh`（config、config.d/、bin/）
 - `~/.claude`
-- `~/.config/chezmoi`、`~/.config/keepassxc`
+- `~/.config/chezmoi`
 - `~/.kube`
 - Cursor 配置目录（按平台不同）
 
@@ -33,7 +33,7 @@ make install-chezmoi-watcher
 |---------|---------|------|
 | `~/.ssh/` | `sync-ssh-config.sh` | 自动使用 `--encrypt` 处理 .sconf 文件 |
 | `~/.claude/` | `sync-claude-config.sh` | 原样拷回 settings.json / skills_manifest |
-| `~/.zshrc`、`~/.config/zsh/conf.d/` | `sync-zsh-config.sh` | 跳过 `30-claude.zsh` |
+| `~/.zshrc`、`~/.config/zsh/conf.d/` | `sync-zsh-config.sh` | 跳过本机遗留的 `30-claude.zsh` |
 | Cursor 配置 | `sync-cursor-config.sh` | 保留模板占位符 |
 | 其他文件 | `chezmoi add` | 通用处理 |
 

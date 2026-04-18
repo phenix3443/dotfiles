@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Sync ~/.zshrc and ~/.config/zsh/conf.d/*.zsh into chezmoi source.
-# Skips 30-claude.zsh (generated from 30-claude.zsh.tmpl + KeePassXC; do not copy plaintext token).
+# Skips deprecated 30-claude.zsh if it still exists locally.
 # Note: apply-zsh runs ensure-zsh-plugins.sh first to ensure Homebrew and plugins are installed.
 
 set -e
@@ -37,7 +37,7 @@ for f in "$CONFD_LOCAL"/*.zsh; do
   base=$(basename "$f")
   case "$base" in
     30-claude.zsh)
-      echo "skip $base (managed by 30-claude.zsh.tmpl + KeePassXC)"
+      echo "skip $base (deprecated local file)"
       skipped=$((skipped + 1))
       continue
       ;;

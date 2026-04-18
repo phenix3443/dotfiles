@@ -17,7 +17,6 @@
 ## 敏感与覆盖
 
 - **`env` 与 `make sync-claude`**：`settings.json` 会**整份**写入 `settings.json.tmpl`（含 `env`）。**提交前审阅 diff**，勿把真实 API Key 推进公开仓库；需要机内覆盖时仍可用 **`~/.claude/settings.local.json`**
-- **终端环境**：亦可只在 **KeePassXC + zsh** 维护网关与 token，见 [zsh.md](zsh.md)
 - **`mcp_servers.json`**：可能含 token，**提交前审阅 diff**
 
 ## RTK（Rust Token Killer）

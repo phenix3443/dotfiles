@@ -1,6 +1,6 @@
 # Kubernetes kubeconfig 管理
 
-`~/.kube/config` 以 age 加密形式由 chezmoi 管理，与 KeePassXC 数据库共用同一套 age 密钥。
+`~/.kube/config` 以 age 加密形式由 chezmoi 管理，使用 `~/.config/chezmoi/age.txt` 进行解密。
 
 ## 如何保存
 

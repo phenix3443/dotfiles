@@ -19,29 +19,17 @@
 | `06-zsh-autosuggestions.zsh` | Load zsh-autosuggestions plugin (requires Homebrew) | compinit 之后 |
 | `10-asdf-path.zsh` | asdf version manager fpath and PATH setup | 在插件之后设置环境变量 |
 | `20-local-bin-path.zsh` | ~/.local/bin path setup | 最后修改 PATH |
-| `30-claude.zsh` | Claude Code API credentials (generated from 30-claude.zsh.tmpl) | 无依赖，环境变量设置 |
 | `99-zsh-syntax-highlighting.zsh` | Load zsh-syntax-highlighting plugin (requires Homebrew) | **必须最后**：官方要求在所有插件之后加载 |
 
-## Claude env (`30-claude.zsh`)
-
-[30-claude.zsh.tmpl](../dotfiles/dot_config/zsh/conf.d/30-claude.zsh.tmpl) renders to `~/.config/zsh/conf.d/30-claude.zsh`:
-
-- **ANTHROPIC_AUTH_TOKEN** from KeePassXC entry **`Claude Code`** (Password)
-- **ANTHROPIC_BASE_URL** from the same entry (URL field)
-
-Ensure the KeePassXC entry exists before `chezmoi apply`. Apply still runs `run_before` to unlock the database when other templates need it.
-
-Do **not** copy plaintext `30-claude.zsh` from disk back into the repo; keep the `.tmpl` and KeePassXC as the source of truth for secrets.
-
-Other non-secret snippets remain plain `.zsh` files in `conf.d/`.
+Claude Code 的运行时 `env` 现在统一由 `~/.claude/settings.json` 管理，不再通过 zsh 片段导出。
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
 | `make install-zsh-plugins` | Ensure Homebrew and zsh plugins (syntax-highlighting, autosuggestions) are installed |
-| `make apply-zsh` | Ensure plugins installed, then apply `~/.zshrc` and `~/.config/zsh` (KeePassXC when templates run) |
-| `make sync-zsh` | Copy `~/.zshrc` and `conf.d/*.zsh` into repo; **skips** `30-claude.zsh` (keep `30-claude.zsh.tmpl`) |
+| `make apply-zsh` | Ensure plugins installed, then apply `~/.zshrc` and `~/.config/zsh` |
+| `make sync-zsh` | Copy `~/.zshrc` and `conf.d/*.zsh` into repo; skips deprecated local `30-claude.zsh` if it still exists |
 
 **Note**: `make apply-zsh` automatically runs `ensure-zsh-plugins.sh` first, which will:
 - Install Homebrew if missing (macOS only)
@@ -50,14 +38,13 @@ Other non-secret snippets remain plain `.zsh` files in `conf.d/`.
 
 ## New machine
 
-1. Age key + KeePassXC DB as in main README.
-2. Create KeePassXC entry **Claude Code** (Password = API token, URL = base URL).
-3. `make install` (includes `install-zsh-plugins`) or `make apply-zsh` (auto-installs plugins if missing).
+1. 准备 age 私钥，按主 README 完成基础 chezmoi 配置。
+2. `make install` (includes `install-zsh-plugins`) or `make apply-zsh` (auto-installs plugins if missing).
 
 ## Optional: other local-only exports
 
-Use **`~/.zshrc.local`** for keys not stored in KeePassXC.
+Use **`~/.zshrc.local`** for any machine-local exports you do not want managed by chezmoi.
 
 ## Optional: sync from local to repo
 
-`make sync-zsh` runs [sync-zsh-config.sh](../scripts/sync-zsh-config.sh). Edit `30-claude.zsh` behavior only via **`30-claude.zsh.tmpl`** and KeePassXC, not via sync.
+`make sync-zsh` runs [sync-zsh-config.sh](../scripts/sync-zsh-config.sh). If a legacy local `30-claude.zsh` still exists, the sync script intentionally ignores it.

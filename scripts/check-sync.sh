@@ -46,7 +46,6 @@ for repo_f in "$DOTFILES/dot_config/zsh/conf.d"/*.zsh; do
 done
 if [ "$zsh_any" -eq 0 ]; then
   echo "  （上述明文与仓库一致，或无可比文件）"
-  echo "  （未对比：30-claude.zsh，由 KeePass + 30-claude.zsh.tmpl 生成）"
 fi
 echo ""
 
@@ -111,9 +110,8 @@ fi
 echo ""
 
 echo "【本脚本不会逐项对比的跟踪项】"
-echo "  · ~/.config/chezmoi/chezmoi.toml（模板 + KeePass 等）"
+echo "  · ~/.config/chezmoi/chezmoi.toml（模板生成）"
 echo "  · ~/.kube/config（多为 age 加密源，用 make encrypt-kubeconfig 等）"
-echo "  · ~/.config/keepassxc 等"
 echo "  · 任意 *.tmpl 渲染结果与源的语义差异（需 apply 后看效果）"
 echo ""
 echo "【全面检查】对上述全部已管理文件执行："

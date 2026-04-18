@@ -4,21 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a chezmoi-managed dotfiles repository with integrated KeePassXC for secure credential management and age encryption for sensitive files. The source state lives in the `dotfiles/` subdirectory (configured via `.chezmoiroot`).
+This is a chezmoi-managed dotfiles repository with age encryption for sensitive files. The source state lives in the `dotfiles/` subdirectory (configured via `.chezmoiroot`).
 
 ## Architecture
 
 **Core Components:**
-- **chezmoi templates** (`dotfiles/**/*.tmpl`): Template files that inject secrets from KeePassXC at apply time
-- **KeePassXC integration**: Credentials stored in `~/.config/keepassxc/chezmoi.kdbx`, accessed via `keepassxc` template function
-- **age encryption**: Sensitive files (KeePassXC database, kubeconfig, SSH configs) encrypted with age before committing
+- **chezmoi templates** (`dotfiles/**/*.tmpl`): Template files used to generate managed config files
+- **age encryption**: Sensitive files (for example kubeconfig and SSH configs) encrypted before committing
 - **File watcher**: Universal auto-sync service monitoring all managed files (see `docs/watcher.md`)
 - **Makefile system**: Modular makefiles in `make/*.mk` for installation, configuration, and management tasks
 
 **Template System:**
-- Templates use `{{ (keepassxc "EntryName").Password }}` to inject secrets from KeePassXC
-- Entry names are case-sensitive and support hierarchical paths like `Internet/MyApp`
-- Custom attributes accessed via `{{ keepassxcAttribute "EntryName" "AttributeName" }}`
 - Age encryption configured in `dotfiles/dot_config/chezmoi/chezmoi.toml.tmpl`
 
 **Security Model:**
@@ -37,7 +33,7 @@ make bootstrap-chezmoi-config   # Bootstrap config on new machine
 
 **chezmoi Operations:**
 ```bash
-chezmoi apply                           # Apply all templates (prompts for KeePassXC password)
+chezmoi apply                           # Apply all managed files
 chezmoi apply ~/.config/app/config.json # Apply specific file
 chezmoi diff                            # Preview changes before applying
 chezmoi execute-template < file.tmpl    # Test template rendering without writing
@@ -59,26 +55,15 @@ make logs-chezmoi-watcher               # View watcher service logs
 make uninstall-chezmoi-watcher          # Uninstall watcher service
 ```
 
-**KeePassXC Entry Management:**
-```bash
-make keepassxc-entry add|show|edit|rm|ls|search
-```
-
-**Testing:**
-```bash
-make test                               # Run keepassxc-entry tests
-```
-
 ## Development Workflow
 
 **Adding New Managed Files:**
 1. Create template in `dotfiles/` with appropriate chezmoi prefix (e.g., `dot_config/app/config.json.tmpl`)
-2. Use `{{ (keepassxc "EntryName").Password }}` for secrets
+2. Prefer plain templates for non-sensitive values and age-encrypted source files for sensitive content
 3. Test with `chezmoi execute-template < dotfiles/path/to/file.tmpl`
 4. Apply with `chezmoi apply`
 
 **Managing Encrypted Files:**
-- For KeePassXC database: `chezmoi add --encrypt ~/.config/keepassxc/chezmoi.kdbx`
 - For kubeconfig: `make encrypt-kubeconfig`
 - For SSH configs: `chezmoi add --encrypt ~/.ssh/config.d/*.sconf` (or use `make sync-ssh`)
 - Encrypted files stored as `*.age` in source state
@@ -87,7 +72,7 @@ make test                               # Run keepassxc-entry tests
 1. Clone repository
 2. Place age private key at `~/.config/chezmoi/age.txt`
 3. Run `make bootstrap-chezmoi-config`
-4. Run `chezmoi apply` (decrypts KeePassXC database, applies all configs)
+4. Run `chezmoi apply`
 
 ## File Structure
 
@@ -97,14 +82,14 @@ dotfiles/                       # chezmoi source state (via .chezmoiroot)
   .chezmoitemplates/            # shared templates (Cursor configs)
   dot_claude/                   # Claude Code config (settings.json.tmpl, hooks/, CLAUDE.md, RTK.md)
   dot_zshrc                     # ~/.zshrc
-  dot_config/                   # ~/.config (chezmoi, keepassxc, zsh/conf.d)
+  dot_config/                   # ~/.config (chezmoi, zsh/conf.d)
   private_dot_ssh/              # SSH configs (encrypted .sconf, scripts)
   private_dot_kube/             # Kubernetes kubeconfig (encrypted)
   private_Library/              # macOS Library (Cursor on macOS)
   AppData/                      # Windows AppData (Cursor on Windows)
 
 make/                           # modular Makefile components
-  chezmoi.mk keepassxc.mk age.mk ssh.mk watcher.mk
+  chezmoi.mk age.mk ssh.mk watcher.mk
   claude.mk cursor.mk zsh.mk
   lefthook.mk gitleaks.mk add-skill.mk common.mk
 
@@ -127,8 +112,6 @@ docs/                           # detailed documentation
 
 ## Important Notes
 
-- KeePassXC database password required for every `chezmoi apply`
-- Entry names in templates must exactly match KeePassXC (case-sensitive)
 - Age private key (`~/.config/chezmoi/age.txt`) must never be committed
 - Generated files contain real secrets - managed by chezmoi, not for manual editing
 - Use `git commit --no-verify` only for gitleaks false positives
