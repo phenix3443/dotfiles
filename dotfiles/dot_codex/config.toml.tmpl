@@ -1,0 +1,62 @@
+approval_policy = 'never'
+model = 'gpt-5.4'
+model_provider = 'code-switch-r'
+model_reasoning_effort = "high"
+preferred_auth_method = 'apikey'
+sandbox_mode = 'workspace-write'
+
+[features]
+multi_agent = true
+
+[model_providers.code-switch-r]
+base_url = 'http://127.0.0.1:18100'
+name = 'code-switch-r'
+requires_openai_auth = false
+wire_api = 'responses'
+
+[model_providers.yls]
+base_url = 'https://code.ylsagi.com/codex'
+name = 'yls'
+requires_openai_auth = false
+wire_api = 'responses'
+
+[plugins]
+[plugins.'github@openai-curated']
+enabled = true
+
+[projects]
+[projects.'{{ .chezmoi.homeDir }}/github/phenix3443/ppanel/ppanel-frontend']
+trust_level = 'trusted'
+
+[projects.'{{ .chezmoi.homeDir }}/github/phenix3443/test']
+trust_level = 'trusted'
+
+[projects.'{{ .chezmoi.homeDir }}/github/phenix3443/zkme']
+trust_level = 'trusted'
+
+[projects.'{{ .chezmoi.homeDir }}/github/womenlia/home-lab']
+trust_level = 'trusted'
+
+[projects."{{ .chezmoi.homeDir }}/.ssh"]
+trust_level = "trusted"
+
+[projects."{{ .chezmoi.homeDir }}/github/idea/dioxide_python"]
+trust_level = "trusted"
+
+[projects."{{ .chezmoi.homeDir }}/github/longbo/dioxide_python"]
+trust_level = "trusted"
+
+[projects."/"]
+trust_level = "trusted"
+
+[projects."{{ .chezmoi.homeDir }}/github/womenlia/clash"]
+trust_level = "trusted"
+
+[projects."{{ .chezmoi.homeDir }}/github/phenix3443/workspace"]
+trust_level = "trusted"
+
+[projects."{{ .chezmoi.homeDir }}/.codex"]
+trust_level = "trusted"
+
+[sandbox_workspace_write]
+network_access = true
