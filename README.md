@@ -39,7 +39,7 @@ chezmoi apply                  # 应用所有配置
 | SSH | 模块化配置 + age 加密 + 自动同步 | [docs/ssh.md](docs/ssh.md) |
 | Kubernetes | kubeconfig（age 加密） | [docs/kubeconfig.md](docs/kubeconfig.md) |
 | Cursor | settings.json、keybindings.json | [docs/cursor.md](docs/cursor.md) |
-| Claude Code | `dot_claude/settings.json`、hooks、skills、MCP 配置 | [docs/claude.md](docs/claude.md) |
+| Claude Code / Codex | `dot_claude/`、`dot_codex/`、gstack 安装流程 | [docs/claude.md](docs/claude.md) |
 | Zsh | `dot_zshrc` + `conf.d/` | [docs/zsh.md](docs/zsh.md) |
 | 文件监控 | 通用后台服务，自动同步所有管理的文件 | [docs/watcher.md](docs/watcher.md) |
 
@@ -52,6 +52,7 @@ chezmoi apply                  # 应用所有配置
 | 命令 | 说明 |
 |------|------|
 | `make install` | 安装所有依赖并配置 hooks |
+| `make install-gstack` | 安装 gstack，并注册到 Claude Code 与 Codex |
 | `make setup-age-keys` | 生成 age 密钥对 |
 | `make bootstrap-chezmoi-config` | 新机器上引导 chezmoi 配置 |
 
@@ -63,11 +64,13 @@ chezmoi apply                  # 应用所有配置
 | `chezmoi diff` | 预览变更 |
 | `make apply-ssh` | 仅应用 SSH 配置 |
 | `make apply-claude` | 仅应用 Claude 配置（普通 settings.json） |
+| `make apply-codex` | 仅应用 Codex 配置 |
 | `make apply-zsh` | 仅应用 ~/.zshrc 与 ~/.config/zsh |
 | `make apply-cursor` | 仅应用 Cursor 配置 |
 | `make apply-kube` | 仅应用 ~/.kube/config（从 age 解密） |
 | `make sync-ssh` | 同步本地 SSH 配置到仓库 |
 | `make sync-claude` | 本机 Claude 配置原样写回仓库（提交前勿含密钥） |
+| `make sync-codex` | 同步本机 Codex 配置到仓库 |
 | `make sync-zsh` | 本机 zsh / conf.d 写回仓库（跳过已废弃的 `30-claude.zsh`） |
 | `make sync-cursor` | 同步本地 Cursor 配置到仓库 |
 | `make sync-kube` | 加密 ~/.kube/config 到仓库 |

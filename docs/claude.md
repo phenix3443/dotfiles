@@ -1,6 +1,6 @@
 # Claude Code 配置管理
 
-本仓库在 **`dotfiles/dot_claude/`** 管理 Claude Code 配置。
+本仓库在 **`dotfiles/dot_claude/`** 管理 Claude Code 配置，并在 **`dotfiles/dot_codex/`** 管理 Codex 的用户级配置。
 
 ## 管理的文件
 
@@ -27,14 +27,26 @@ RTK 是一个 CLI 代理，对常见开发命令的 LLM token 消耗减少 60-90
 - **chezmoi apply** 时：`run_after_05-install-rtk.sh` 会自动安装 rtk 二进制
 - hooks 和 `RTK.md` 由 chezmoi 直接管理，无需额外 `rtk init -g`
 
+## gstack
+
+gstack 通过一份共享源码同时注册到 Claude Code 和 Codex。
+
+- **安装**：`make install-gstack`
+- **源码目录**：`~/.gstack/repos/gstack`
+- **注册结果**：Claude 使用 `~/.claude/skills/gstack`，Codex 使用 `~/.codex/skills/gstack`
+- **安装参数**：仓库脚本会执行官方 `./setup --host claude --no-prefix --quiet` 与 `./setup --host codex --no-prefix --quiet`
+
 ## 命令
 
 | 命令 | 说明 |
 | ---- | ---- |
 | `make install-claude` | 安装 Claude Code CLI |
 | `make install-rtk` | 安装 RTK 二进制 |
+| `make install-gstack` | 安装 gstack 并注册到 Claude Code / Codex |
 | `make sync-claude` | 拷回 settings（模板化）、skills、hooks、md、MCP 到仓库 |
 | `make apply-claude` | `chezmoi apply ~/.claude`，应用所有配置到本机 |
+| `make sync-codex` | 拷回 `~/.codex/config.toml` 到仓库模板 |
+| `make apply-codex` | `chezmoi apply ~/.codex`，应用 Codex 配置到本机 |
 | `make check-sync` | 对比 `~/.claude.json` 的 `mcpServers` 与仓库 `mcp_servers.json` |
 
 ## 修改流程
